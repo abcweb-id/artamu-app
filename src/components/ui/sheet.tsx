@@ -15,11 +15,13 @@ type SheetProps = {
   /** Dipanggil saat lembar tertutup, dari tombol, geser ke bawah, atau ketuk latar. */
   onClose: () => void;
   title?: string;
+  /** push: tumpuk di atas lembar lain yang sedang terbuka tanpa menutupnya. */
+  stack?: 'push' | 'replace';
   children: ReactNode;
 };
 
 /** Lembar bawah: sudut 24, pegangan 38×4, latar gelap 50 persen di belakangnya. */
-export function Sheet({ open, onClose, title, children }: SheetProps) {
+export function Sheet({ open, onClose, title, stack = 'replace', children }: SheetProps) {
   const ref = useRef<BottomSheetModal>(null);
   const c = usePalette();
   const insets = useSafeAreaInsets();
@@ -52,6 +54,7 @@ export function Sheet({ open, onClose, title, children }: SheetProps) {
         presented.current = false;
         onClose();
       }}
+      stackBehavior={stack}
       backdropComponent={backdrop}
       keyboardBehavior="interactive"
       keyboardBlurBehavior="restore"

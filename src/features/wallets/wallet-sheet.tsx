@@ -10,7 +10,7 @@ import { formatRp } from '@/lib/money';
 import { useAppStore } from '@/stores/app-store';
 import { usePalette } from '@/theme/use-palette';
 
-import { useActiveWallet } from './use-active-wallet';
+import { useActiveWallet, useWalletBalances } from './use-active-wallet';
 
 /** Lembar Pilih dompet dari pemilih dompet di Beranda dan Transaksi. */
 export function WalletSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -18,6 +18,7 @@ export function WalletSheet({ open, onClose }: { open: boolean; onClose: () => v
   const c = usePalette();
   const { key: active, wallets } = useActiveWallet();
   const setActiveWallet = useAppStore((s) => s.setActiveWallet);
+  const balances = useWalletBalances();
 
   return (
     <Sheet open={open} onClose={onClose} title={t('WALLET_PICKER.TITLE')}>
@@ -41,7 +42,7 @@ export function WalletSheet({ open, onClose }: { open: boolean; onClose: () => v
             <View className="flex-1">
               <Text className="text-[15px] font-medium leading-[22px] text-text">{name}</Text>
               <Text className="text-[12.5px] text-muted" style={{ fontVariant: ['tabular-nums'] }}>
-                {formatRp(sampleWallets[w].balance)}
+                {formatRp(balances[w])}
               </Text>
             </View>
             {selected ? <Icon name="check" color={c.primary} size={22} /> : null}

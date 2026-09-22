@@ -173,5 +173,150 @@
     "MANAGE": "Manage wallets",
     "TRANSFER": "Transfer",
     "SELECTED": "{{wallet}}, selected"
+  },
+  "CATEGORIES": {
+    "MAKAN": {
+      "NAME": "Food",
+      "SHORT": "Food"
+    },
+    "TRANSPORT": {
+      "NAME": "Transport",
+      "SHORT": "Transport"
+    },
+    "BELANJA": {
+      "NAME": "Shopping",
+      "SHORT": "Shopping"
+    },
+    "TAGIHAN": {
+      "NAME": "Rent and bills",
+      "SHORT": "Bills"
+    },
+    "SEHAT": {
+      "NAME": "Health",
+      "SHORT": "Health"
+    },
+    "HIBUR": {
+      "NAME": "Entertainment",
+      "SHORT": "Entertainment"
+    },
+    "DIDIK": {
+      "NAME": "Education",
+      "SHORT": "Education"
+    },
+    "SEDEKAH": {
+      "NAME": "Charity",
+      "SHORT": "Charity"
+    },
+    "RUMAH": {
+      "NAME": "Household",
+      "SHORT": "Home"
+    },
+    "PULSA": {
+      "NAME": "Phone and internet",
+      "SHORT": "Phone"
+    },
+    "LAIN": {
+      "NAME": "Other",
+      "SHORT": "Other"
+    },
+    "GAJI": {
+      "NAME": "Salary",
+      "SHORT": "Salary"
+    },
+    "PROYEK": {
+      "NAME": "Freelance projects",
+      "SHORT": "Projects"
+    },
+    "BONUS": {
+      "NAME": "Bonus and holiday pay",
+      "SHORT": "Bonus"
+    },
+    "INVEST": {
+      "NAME": "Investment returns",
+      "SHORT": "Investment"
+    },
+    "JUAL": {
+      "NAME": "Sales of goods",
+      "SHORT": "Sales"
+    },
+    "CASHBACK": {
+      "NAME": "Cashback and promos",
+      "SHORT": "Cashback"
+    },
+    "KIRIMAN": {
+      "NAME": "Money from family",
+      "SHORT": "Family"
+    },
+    "HADIAH": {
+      "NAME": "Gifts",
+      "SHORT": "Gifts"
+    },
+    "LAININ": {
+      "NAME": "Other",
+      "SHORT": "Other"
+    },
+    "BELANJA_DAPUR": {
+      "NAME": "Groceries",
+      "SHORT": "Groceries"
+    },
+    "BELANJA_PAKAIAN": {
+      "NAME": "Clothing",
+      "SHORT": "Clothing"
+    },
+    "BELANJA_BARANG": {
+      "NAME": "Household goods",
+      "SHORT": "Household goods"
+    },
+    "TAGIHAN_KOS": {
+      "NAME": "Rent",
+      "SHORT": "Rent"
+    },
+    "TAGIHAN_LISTRIK": {
+      "NAME": "Electricity",
+      "SHORT": "Electricity"
+    },
+    "TAGIHAN_INTERNET": {
+      "NAME": "Internet",
+      "SHORT": "Internet"
+    },
+    "MAKAN_JAJAN": {
+      "NAME": "Snacks and coffee",
+      "SHORT": "Snacks and coffee"
+    },
+    "PROYEK_WEB": {
+      "NAME": "Web development",
+      "SHORT": "Web development"
+    },
+    "PROYEK_DESAIN": {
+      "NAME": "Design",
+      "SHORT": "Design"
+    },
+    "INVEST_REKSA": {
+      "NAME": "Mutual funds",
+      "SHORT": "Mutual funds"
+    },
+    "INVEST_BUNGA": {
+      "NAME": "Savings interest",
+      "SHORT": "Savings interest"
+    }
+  },
+  "INPUT": {
+    "OUT": "Expense",
+    "IN": "Income",
+    "AMOUNT": "Amount",
+    "EMPTY_AMOUNT": "Enter an amount first",
+    "ALL_CATEGORIES": "All",
+    "ALL_CATEGORIES_LABEL": "See all categories",
+    "NOTE_LABEL": "Note",
+    "NOTE_PLACEHOLDER_OUT": "Lunch",
+    "NOTE_PLACEHOLDER_IN": "September salary",
+    "DATE_LABEL": "Change date, currently {{date}}",
+    "SUB": "Sub",
+    "SUB_LABEL": "Choose {{category}} subcategory",
+    "SUB_TITLE": "{{category}} subcategory",
+    "SUB_NONE": "No subcategory",
+    "PHOTO": "Add receipt photo",
+    "DELETE_DIGIT": "Delete digit",
+    "SAVE": "Save transaction"
   }
 }

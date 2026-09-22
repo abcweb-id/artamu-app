@@ -15,7 +15,7 @@ Tiga kotak per layar:
 |---|---|
 | Item di checklist | 36 (35 layar prototipe ditambah bottom bar) |
 | Rute ada | 13 |
-| Sesuai wireframe | 10 |
+| Sesuai wireframe | 11 |
 | Terhubung database | 0 |
 
 Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql` dan belum dipasang sebagai migrasi.
@@ -59,10 +59,11 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database: masih DATA CONTOH dari prototipe (`src/features/transactions/sample-data.ts`), dipakai bersama dengan Beranda
 
 ### 6. Input transaksi
-- [x] Rute ada: `src/components/input-sheet.tsx`, lembar bawah terbuka dari tombol ＋ (bug lembar tidak pernah muncul sudah diperbaiki)
-- [ ] Menutup dengan geser ke bawah lalu membuka lagi (belum bisa diuji di browser)
-- [ ] Sesuai wireframe: baru judul "Transaksi baru", belum ada keypad, kategori, dan tombol simpan
-- [ ] Terhubung database
+- [x] Rute ada: `src/components/input-sheet.tsx`, lembar bawah dari tombol ＋. Kategori bawaan di `src/features/categories/default-categories.ts` (20 utama, 11 sub, nama id/en)
+- [x] Sesuai wireframe: sakelar Keluar/Masuk, nominal Rp dengan keypad (000 dan hapus, maksimal 11 digit), 5 kategori tersering dengan cincin pilihan dan Semua, catatan, pil tanggal, subkategori, dan foto struk, Batal dan Simpan transaksi. Dicek berdampingan dengan prototipe (terang dan gelap)
+- [x] Simpan tanpa nominal: "Isi nominal dulu". Simpan: transaksi masuk ke dompet aktif, saldo, grafik, transaksi terbaru, dan Daftar transaksi langsung berubah. Formulir kosong lagi tiap dibuka. Pilih subkategori lewat lembar kecil. Semua diuji di browser
+- [ ] Belum dibuat: daftar Semua kategori, pemilih tanggal (selalu hari ini), foto struk, saran kategori dari catatan ("Biasanya masuk …"), ubah transaksi
+- [ ] Terhubung database: transaksi baru hanya di memori (`src/stores/transactions-store.ts`), hilang saat aplikasi ditutup
 
 ### 7. Pengaturan
 - [x] Rute ada: `src/app/(tabs)/settings.tsx`

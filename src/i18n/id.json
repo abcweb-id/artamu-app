@@ -173,5 +173,150 @@
     "MANAGE": "Kelola dompet",
     "TRANSFER": "Transfer",
     "SELECTED": "{{wallet}}, dipilih"
+  },
+  "CATEGORIES": {
+    "MAKAN": {
+      "NAME": "Makan",
+      "SHORT": "Makan"
+    },
+    "TRANSPORT": {
+      "NAME": "Transport",
+      "SHORT": "Transport"
+    },
+    "BELANJA": {
+      "NAME": "Belanja",
+      "SHORT": "Belanja"
+    },
+    "TAGIHAN": {
+      "NAME": "Kos dan tagihan",
+      "SHORT": "Tagihan"
+    },
+    "SEHAT": {
+      "NAME": "Kesehatan",
+      "SHORT": "Kesehatan"
+    },
+    "HIBUR": {
+      "NAME": "Hiburan",
+      "SHORT": "Hiburan"
+    },
+    "DIDIK": {
+      "NAME": "Pendidikan",
+      "SHORT": "Pendidikan"
+    },
+    "SEDEKAH": {
+      "NAME": "Sedekah",
+      "SHORT": "Sedekah"
+    },
+    "RUMAH": {
+      "NAME": "Rumah tangga",
+      "SHORT": "Rumah"
+    },
+    "PULSA": {
+      "NAME": "Pulsa dan internet",
+      "SHORT": "Pulsa"
+    },
+    "LAIN": {
+      "NAME": "Lainnya",
+      "SHORT": "Lainnya"
+    },
+    "GAJI": {
+      "NAME": "Gaji",
+      "SHORT": "Gaji"
+    },
+    "PROYEK": {
+      "NAME": "Proyek lepas",
+      "SHORT": "Proyek"
+    },
+    "BONUS": {
+      "NAME": "Bonus dan THR",
+      "SHORT": "Bonus"
+    },
+    "INVEST": {
+      "NAME": "Hasil investasi",
+      "SHORT": "Investasi"
+    },
+    "JUAL": {
+      "NAME": "Penjualan barang",
+      "SHORT": "Penjualan"
+    },
+    "CASHBACK": {
+      "NAME": "Cashback dan promo",
+      "SHORT": "Cashback"
+    },
+    "KIRIMAN": {
+      "NAME": "Kiriman keluarga",
+      "SHORT": "Kiriman"
+    },
+    "HADIAH": {
+      "NAME": "Hadiah",
+      "SHORT": "Hadiah"
+    },
+    "LAININ": {
+      "NAME": "Lainnya",
+      "SHORT": "Lainnya"
+    },
+    "BELANJA_DAPUR": {
+      "NAME": "Dapur",
+      "SHORT": "Dapur"
+    },
+    "BELANJA_PAKAIAN": {
+      "NAME": "Pakaian",
+      "SHORT": "Pakaian"
+    },
+    "BELANJA_BARANG": {
+      "NAME": "Barang rumah",
+      "SHORT": "Barang rumah"
+    },
+    "TAGIHAN_KOS": {
+      "NAME": "Kos",
+      "SHORT": "Kos"
+    },
+    "TAGIHAN_LISTRIK": {
+      "NAME": "Listrik",
+      "SHORT": "Listrik"
+    },
+    "TAGIHAN_INTERNET": {
+      "NAME": "Internet",
+      "SHORT": "Internet"
+    },
+    "MAKAN_JAJAN": {
+      "NAME": "Jajan dan kopi",
+      "SHORT": "Jajan dan kopi"
+    },
+    "PROYEK_WEB": {
+      "NAME": "Pembuatan web",
+      "SHORT": "Pembuatan web"
+    },
+    "PROYEK_DESAIN": {
+      "NAME": "Desain",
+      "SHORT": "Desain"
+    },
+    "INVEST_REKSA": {
+      "NAME": "Reksa dana",
+      "SHORT": "Reksa dana"
+    },
+    "INVEST_BUNGA": {
+      "NAME": "Bunga tabungan",
+      "SHORT": "Bunga tabungan"
+    }
+  },
+  "INPUT": {
+    "OUT": "Keluar",
+    "IN": "Masuk",
+    "AMOUNT": "Nominal",
+    "EMPTY_AMOUNT": "Isi nominal dulu",
+    "ALL_CATEGORIES": "Semua",
+    "ALL_CATEGORIES_LABEL": "Lihat semua kategori",
+    "NOTE_LABEL": "Catatan",
+    "NOTE_PLACEHOLDER_OUT": "Nasi padang",
+    "NOTE_PLACEHOLDER_IN": "Gaji September",
+    "DATE_LABEL": "Ganti tanggal, sekarang {{date}}",
+    "SUB": "Sub",
+    "SUB_LABEL": "Pilih subkategori {{category}}",
+    "SUB_TITLE": "Subkategori {{category}}",
+    "SUB_NONE": "Tanpa subkategori",
+    "PHOTO": "Tambah foto struk",
+    "DELETE_DIGIT": "Hapus angka",
+    "SAVE": "Simpan transaksi"
   }
 }

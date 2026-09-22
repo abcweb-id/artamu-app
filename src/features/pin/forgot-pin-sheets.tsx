@@ -10,6 +10,7 @@ import { Sheet } from '@/components/ui/sheet';
 import { authenticateWithBiometrics } from '@/lib/biometrics';
 import { useAppStore } from '@/stores/app-store';
 import { useOnboardingStore } from '@/stores/onboarding-store';
+import { useTransactionsStore } from '@/stores/transactions-store';
 import { usePalette } from '@/theme/use-palette';
 
 type ForgotPinSheetsProps = { open: boolean; onClose: () => void };
@@ -53,6 +54,7 @@ export function ForgotPinSheets({ open, onClose }: ForgotPinSheetsProps) {
     // dan isi expo-secure-store.
     setWipeOpen(false);
     useOnboardingStore.getState().reset();
+    useTransactionsStore.getState().reset();
     useAppStore.getState().reset();
   };
 
