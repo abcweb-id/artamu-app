@@ -6,9 +6,11 @@ import { Text, View } from 'react-native';
 import { Screen } from '@/components/screen';
 import { Button } from '@/components/ui/button';
 import { IconMark } from '@/components/ui/icon-mark';
+import { ForgotPinSheets } from '@/features/pin/forgot-pin-sheets';
 import { PinDots } from '@/features/pin/pin-dots';
 import { PinPad } from '@/features/pin/pin-pad';
 import { usePinEntry } from '@/features/pin/use-pin-entry';
+import { authenticateWithBiometrics } from '@/lib/biometrics';
 import { MAX_PIN_ATTEMPTS, useAppStore } from '@/stores/app-store';
 
 /** Sisa detik penguncian, diperbarui tiap seperempat detik. */
@@ -35,7 +37,10 @@ export default function Lock() {
   const failedAttempts = useAppStore((s) => s.failedAttempts);
   const lockedUntil = useAppStore((s) => s.lockedUntil);
   const clearPinLock = useAppStore((s) => s.clearPinLock);
+  const biometricEnabled = useAppStore((s) => s.biometricEnabled);
+  const unlock = useAppStore((s) => s.unlock);
   const [error, setError] = useState('');
+  const [forgotOpen, setForgotOpen] = useState(false);
   const secondsLeft = useSecondsLeft(lockedUntil, clearPinLock);
   const blocked = secondsLeft > 0;
 
@@ -46,8 +51,17 @@ export default function Lock() {
     );
   });
 
-  // Lupa PIN dan sidik jari belum dibuat (butuh lembar pemulihan dan expo-local-authentication).
-  const forgot = <Button variant="link" label={t('PIN.FORGOT')} />;
+  const unlockWithBiometrics = async () => {
+    const ok = await authenticateWithBiometrics(t('PIN.BIOMETRIC_PROMPT'), t('PIN.USE_PIN'));
+    if (ok) unlock();
+  };
+
+  const forgot = (
+    <>
+      <Button variant="link" label={t('PIN.FORGOT')} onPress={() => setForgotOpen(true)} />
+      <ForgotPinSheets open={forgotOpen} onClose={() => setForgotOpen(false)} />
+    </>
+  );
 
   if (blocked) {
     return (
@@ -94,7 +108,12 @@ export default function Lock() {
         {error}
       </Text>
       {forgot}
-      <PinPad onDigit={press} onDelete={remove} onBiometric={() => {}} />
+      <PinPad
+        onDigit={press}
+        onDelete={remove}
+        // Tombol sidik jari hanya tampil kalau pengguna mengaktifkannya.
+        onBiometric={biometricEnabled ? unlockWithBiometrics : undefined}
+      />
     </Screen>
   );
 }

@@ -2,7 +2,8 @@
   "COMMON": {
     "BACK": "Kembali",
     "NOT_BUILT": "Belum dibuat.",
-    "CURRENCY": "Rp"
+    "CURRENCY": "Rp",
+    "CANCEL": "Batal"
   },
   "TABS": {
     "HOME": "Beranda",
@@ -69,7 +70,10 @@
     "LOCKED_HINT": "Coba lagi setelah hitungan selesai",
     "PROGRESS": "{{count}} dari 4 digit",
     "DELETE": "Hapus digit",
-    "BIOMETRIC": "Buka dengan sidik jari"
+    "BIOMETRIC": "Buka dengan sidik jari",
+    "CREATE_NEW_TITLE": "Buat PIN baru",
+    "BIOMETRIC_PROMPT": "Buka Artamu",
+    "USE_PIN": "Pakai PIN"
   },
   "NOTIF_PERMISSION": {
     "PAGE_TITLE": "Izin notifikasi",
@@ -85,5 +89,31 @@
   },
   "SHEET": {
     "NEW_TRANSACTION": "Transaksi baru"
+  },
+  "BIOMETRIC_OFFER": {
+    "PAGE_TITLE": "Sidik jari",
+    "TITLE": "Buka dengan sidik jari?",
+    "SUBTITLE": "Lebih cepat daripada mengetik PIN. Sidik jari diperiksa oleh ponselmu; Artamu hanya menerima hasil berhasil atau gagal.",
+    "ENABLE": "Aktifkan sidik jari",
+    "LATER": "Nanti saja",
+    "PROMPT": "Aktifkan sidik jari untuk Artamu",
+    "FAILED": "Sidik jari tidak dikenali. Coba lagi."
+  },
+  "FORGOT_PIN": {
+    "TITLE": "Lupa PIN",
+    "BODY": "Aplikasi ini tidak punya akun, jadi PIN tidak bisa dikirim ulang. Ada dua jalan:",
+    "BIOMETRIC": "Pakai sidik jari, lalu buat PIN baru",
+    "BIOMETRIC_HINT": "Data tetap utuh",
+    "PROMPT": "Verifikasi untuk membuat PIN baru",
+    "WIPE": "Hapus data dan mulai dari awal",
+    "WIPE_HINT": "Bisa dipulihkan jika punya berkas cadangan"
+  },
+  "WIPE": {
+    "TITLE": "Hapus semua data?",
+    "BODY": "Transaksi, dompet, kategori, tagihan rutin, hutang piutang, dan PIN akan dihapus dari ponsel ini. Tindakan ini tidak bisa dibatalkan.",
+    "WORD": "HAPUS",
+    "LABEL": "Ketik {{word}} untuk melanjutkan",
+    "ERROR": "Ketik {{word}} untuk menghapus",
+    "CONFIRM": "Hapus semua data"
   }
 }

@@ -15,7 +15,8 @@ export function BackButton({ onPress }: { onPress?: () => void }) {
       accessibilityRole="button"
       accessibilityLabel={t('COMMON.BACK')}
       onPress={onPress ?? (() => router.back())}
-      className="-ml-2.5 h-10 w-10 items-center justify-center rounded-[13px] active:opacity-60">
+      className="-ml-2.5 h-10 w-10 items-center justify-center rounded-[13px] active:opacity-60"
+    >
       <Icon name="chevL" color={c.primary} />
     </Pressable>
   );

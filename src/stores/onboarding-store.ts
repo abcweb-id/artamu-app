@@ -11,6 +11,16 @@ type OnboardingState = {
   setNickname: (value: string) => void;
   toggleWallet: (wallet: StarterWallet) => void;
   setWalletAmount: (wallet: StarterWallet, amount: number) => void;
+  reset: () => void;
+};
+
+const initialState = {
+  nickname: '',
+  wallets: {
+    CASH: { selected: true, amount: 0 },
+    BANK: { selected: true, amount: 0 },
+    EWALLET: { selected: false, amount: 0 },
+  },
 };
 
 /**
@@ -19,12 +29,7 @@ type OnboardingState = {
  * saldo awal (kategori sistem opening).
  */
 export const useOnboardingStore = create<OnboardingState>((set) => ({
-  nickname: '',
-  wallets: {
-    CASH: { selected: true, amount: 0 },
-    BANK: { selected: true, amount: 0 },
-    EWALLET: { selected: false, amount: 0 },
-  },
+  ...initialState,
   setNickname: (nickname) => set({ nickname }),
   toggleWallet: (wallet) =>
     set((s) => ({
@@ -32,4 +37,5 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
     })),
   setWalletAmount: (wallet, amount) =>
     set((s) => ({ wallets: { ...s.wallets, [wallet]: { ...s.wallets[wallet], amount } } })),
+  reset: () => set(initialState),
 }));

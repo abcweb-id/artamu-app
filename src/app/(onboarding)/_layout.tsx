@@ -11,6 +11,7 @@ export default function OnboardingLayout() {
       <Stack.Screen name="nickname" />
       <Stack.Screen name="wallets" />
       <Stack.Screen name="create-pin" />
+      <Stack.Screen name="biometrics" />
       <Stack.Screen name="notifications" />
     </Stack>
   );

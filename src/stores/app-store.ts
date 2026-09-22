@@ -16,28 +16,42 @@ type AppState = {
    * Nanti yang disimpan hash-nya di expo-secure-store, bukan PIN-nya.
    */
   pin: string | null;
+  /** Buka dengan sidik jari. Hanya aktif kalau pengguna memilihnya sendiri. */
+  biometricEnabled: boolean;
   failedAttempts: number;
   /** Waktu (ms) sampai layar PIN boleh dicoba lagi. */
   lockedUntil: number | null;
   setOnboarded: (value: boolean) => void;
   setPin: (pin: string) => void;
+  setBiometricEnabled: (value: boolean) => void;
   lock: () => void;
+  /** Dibuka tanpa PIN: setelah sidik jari dikenali atau PIN baru dibuat. */
+  unlock: () => void;
   verifyPin: (input: string) => PinResult;
   clearPinLock: () => void;
+  /** Hapus data dan mulai dari awal (Lupa PIN). */
+  reset: () => void;
 };
 
-export const useAppStore = create<AppState>((set, get) => ({
+const initialState = {
   onboarded: false,
   locked: false,
   pin: null,
+  biometricEnabled: false,
   failedAttempts: 0,
   lockedUntil: null,
+};
+
+export const useAppStore = create<AppState>((set, get) => ({
+  ...initialState,
   setOnboarded: (onboarded) => set({ onboarded }),
   setPin: (pin) => set({ pin }),
+  setBiometricEnabled: (biometricEnabled) => set({ biometricEnabled }),
   lock: () => {
     const { onboarded, pin } = get();
     if (onboarded && pin) set({ locked: true });
   },
+  unlock: () => set({ locked: false, failedAttempts: 0, lockedUntil: null }),
   verifyPin: (input) => {
     const { pin, failedAttempts } = get();
     if (input === pin) {
@@ -53,4 +67,5 @@ export const useAppStore = create<AppState>((set, get) => ({
     return 'wrong';
   },
   clearPinLock: () => set({ lockedUntil: null }),
+  reset: () => set(initialState),
 }));

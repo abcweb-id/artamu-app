@@ -17,7 +17,8 @@ export function IconMark({ name, tone = 'primary' }: IconMarkProps) {
     <View
       className={`h-[60px] w-[60px] items-center justify-center rounded-full ${
         tone === 'danger' ? 'bg-expense' : 'bg-primary'
-      }`}>
+      }`}
+    >
       <Icon name={name} color={c['on-primary']} size={30} />
     </View>
   );

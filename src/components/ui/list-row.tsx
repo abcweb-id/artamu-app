@@ -14,16 +14,30 @@ type ListRowProps = {
   /** Isi kanan sendiri (sakelar, angka). Menggantikan value dan panah. */
   right?: ReactNode;
   onPress?: () => void;
+  /** danger: ikon dan judul merah, untuk tindakan yang menghapus. */
+  tone?: 'default' | 'danger';
 };
 
 /** Baris daftar di Pengaturan dan Akun: ikon garis, judul, keterangan, nilai, panah. */
-export function ListRow({ icon, title, subtitle, value, right, onPress }: ListRowProps) {
+export function ListRow({
+  icon,
+  title,
+  subtitle,
+  value,
+  right,
+  onPress,
+  tone = 'default',
+}: ListRowProps) {
   const c = usePalette();
   const content = (
     <>
-      <Icon name={icon} color={c.muted} size={20} />
+      <Icon name={icon} color={tone === 'danger' ? c.expense : c.muted} size={20} />
       <View className="min-w-0 flex-1">
-        <Text className="text-[15px] leading-[22px] text-text">{title}</Text>
+        <Text
+          className={`text-[15px] leading-[22px] ${tone === 'danger' ? 'font-medium text-expense' : 'text-text'}`}
+        >
+          {title}
+        </Text>
         {subtitle ? (
           <Text className="text-[12.5px] leading-[19px] text-muted">{subtitle}</Text>
         ) : null}

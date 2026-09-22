@@ -2,7 +2,8 @@
   "COMMON": {
     "BACK": "Back",
     "NOT_BUILT": "Not built yet.",
-    "CURRENCY": "Rp"
+    "CURRENCY": "Rp",
+    "CANCEL": "Cancel"
   },
   "TABS": {
     "HOME": "Home",
@@ -69,7 +70,10 @@
     "LOCKED_HINT": "Try again when the countdown ends",
     "PROGRESS": "{{count}} of 4 digits",
     "DELETE": "Delete digit",
-    "BIOMETRIC": "Unlock with fingerprint"
+    "BIOMETRIC": "Unlock with fingerprint",
+    "CREATE_NEW_TITLE": "Create new PIN",
+    "BIOMETRIC_PROMPT": "Unlock Artamu",
+    "USE_PIN": "Use PIN"
   },
   "NOTIF_PERMISSION": {
     "PAGE_TITLE": "Notification permission",
@@ -85,5 +89,31 @@
   },
   "SHEET": {
     "NEW_TRANSACTION": "New transaction"
+  },
+  "BIOMETRIC_OFFER": {
+    "PAGE_TITLE": "Fingerprint",
+    "TITLE": "Unlock with fingerprint?",
+    "SUBTITLE": "Faster than typing your PIN. Your phone checks the fingerprint; Artamu only receives whether it succeeded.",
+    "ENABLE": "Turn on fingerprint",
+    "LATER": "Not now",
+    "PROMPT": "Turn on fingerprint for Artamu",
+    "FAILED": "Fingerprint not recognized. Try again."
+  },
+  "FORGOT_PIN": {
+    "TITLE": "Forgot PIN",
+    "BODY": "This app has no account, so your PIN can't be sent to you. There are two ways:",
+    "BIOMETRIC": "Use fingerprint, then create a new PIN",
+    "BIOMETRIC_HINT": "Your data stays intact",
+    "PROMPT": "Verify to create a new PIN",
+    "WIPE": "Erase data and start over",
+    "WIPE_HINT": "Can be restored if you have a backup file"
+  },
+  "WIPE": {
+    "TITLE": "Erase all data?",
+    "BODY": "Transactions, wallets, categories, recurring bills, debts, and your PIN will be erased from this phone. This can't be undone.",
+    "WORD": "DELETE",
+    "LABEL": "Type {{word}} to continue",
+    "ERROR": "Type {{word}} to erase",
+    "CONFIRM": "Erase all data"
   }
 }

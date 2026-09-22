@@ -11,7 +11,8 @@ export function Checkbox({ checked }: { checked: boolean }) {
     <View
       className={`h-[22px] w-[22px] items-center justify-center rounded-md border-[1.5px] ${
         checked ? 'border-primary bg-primary' : 'border-muted'
-      }`}>
+      }`}
+    >
       {checked ? <Icon name="check" color={c['on-primary']} size={15} weight="bold" /> : null}
     </View>
   );

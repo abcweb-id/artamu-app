@@ -87,11 +87,14 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database: tidak perlu
 
 ### 12. Login PIN (dan Buat PIN, Ulangi PIN)
-- [x] Rute ada: Buat PIN dan Ulangi PIN di `src/app/(onboarding)/create-pin.tsx`, Masukkan PIN di `src/app/(auth)/unlock.tsx`
+- [x] Rute ada: Buat PIN dan Ulangi PIN di `src/app/(onboarding)/create-pin.tsx`, Masukkan PIN di `src/app/(auth)/unlock.tsx`, Buat PIN baru setelah Lupa PIN di `src/app/(auth)/reset-pin.tsx` (tampilan bersama di `src/features/pin/create-pin-view.tsx`)
 - [x] Sesuai wireframe: titik PIN, keypad 72 px, tombol hapus; Masukkan PIN dengan logo, sidik jari, dan Lupa PIN. Beda yang disengaja: Buat PIN dan Ulangi PIN juga memakai logo (wireframe memakai ikon gembok)
 - [x] PIN kedua berbeda: "PIN tidak sama. Ulangi dari awal."; PIN salah: "PIN salah. Sisa N percobaan."
 - [x] Aplikasi ke latar belakang lalu dibuka lagi meminta PIN (diuji di browser; tolong cek di HP)
-- [ ] Tombol sidik jari dan Lupa PIN berfungsi (belum dibuat)
+- [x] Tombol sidik jari (`expo-local-authentication`, hanya sidik jari, tanpa jalan pintas ke kunci layar ponsel). Hanya tampil kalau pengguna mengaktifkannya. Belum diuji di HP
+- [x] Lupa PIN: lembar dengan dua pilihan (sidik jari lalu Buat PIN baru; Hapus data dan mulai dari awal) dan Batal. Sesuai wireframe
+- [x] Hapus semua data: lembar konfirmasi, ketik HAPUS (en: DELETE), kembali ke layar sambutan. Diuji di browser. Sementara hanya mengosongkan data di memori
+- [x] Tambahan di luar wireframe: tawaran "Buka dengan sidik jari?" setelah Buat PIN (`src/app/(onboarding)/biometrics.tsx`), hanya kalau ponsel punya sidik jari terdaftar. Sidik jari tidak pernah aktif otomatis
 - [ ] Terhubung database: PIN masih di memori, nanti hash-nya di expo-secure-store, bukan SQLite
 
 ### 13. PIN terkunci
