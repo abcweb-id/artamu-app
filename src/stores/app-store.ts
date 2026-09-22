@@ -18,12 +18,18 @@ type AppState = {
   pin: string | null;
   /** Buka dengan sidik jari. Hanya aktif kalau pengguna memilihnya sendiri. */
   biometricEnabled: boolean;
+  /** Saldo disamarkan dengan titik (ikon mata di kartu saldo). */
+  hideBalance: boolean;
+  /** Petunjuk yang sudah ditutup dengan "Mengerti". Nanti disimpan di tabel settings. */
+  dismissedHints: string[];
   failedAttempts: number;
   /** Waktu (ms) sampai layar PIN boleh dicoba lagi. */
   lockedUntil: number | null;
   setOnboarded: (value: boolean) => void;
   setPin: (pin: string) => void;
   setBiometricEnabled: (value: boolean) => void;
+  toggleHideBalance: () => void;
+  dismissHint: (key: string) => void;
   lock: () => void;
   /** Dibuka tanpa PIN: setelah sidik jari dikenali atau PIN baru dibuat. */
   unlock: () => void;
@@ -38,6 +44,8 @@ const initialState = {
   locked: false,
   pin: null,
   biometricEnabled: false,
+  hideBalance: false,
+  dismissedHints: [] as string[],
   failedAttempts: 0,
   lockedUntil: null,
 };
@@ -47,6 +55,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   setOnboarded: (onboarded) => set({ onboarded }),
   setPin: (pin) => set({ pin }),
   setBiometricEnabled: (biometricEnabled) => set({ biometricEnabled }),
+  toggleHideBalance: () => set((s) => ({ hideBalance: !s.hideBalance })),
+  dismissHint: (key) => set((s) => ({ dismissedHints: [...s.dismissedHints, key] })),
   lock: () => {
     const { onboarded, pin } = get();
     if (onboarded && pin) set({ locked: true });

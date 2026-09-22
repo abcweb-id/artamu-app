@@ -21,3 +21,8 @@ export function parseAmount(text: string) {
   const digits = text.replace(/\D/g, '');
   return digits ? Number(digits) : 0;
 }
+
+/** "Rp 1.850.000" seperti di prototipe (spasi biasa setelah Rp). */
+export function formatRp(amount: number) {
+  return `Rp ${formatAmount(amount)}`;
+}

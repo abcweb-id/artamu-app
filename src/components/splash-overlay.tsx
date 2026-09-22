@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import { useColorScheme } from 'nativewind';
 import { useEffect, useState } from 'react';
-import { Animated, StyleSheet } from 'react-native';
+import { Animated, Platform, StyleSheet } from 'react-native';
 
 import { usePalette } from '@/theme/use-palette';
 
@@ -25,7 +25,8 @@ export function SplashOverlay() {
       toValue: 0,
       duration: FADE_MS,
       delay: HOLD_MS,
-      useNativeDriver: true,
+      // Driver native tidak ada di web.
+      useNativeDriver: Platform.OS !== 'web',
     });
     anim.start(({ finished }) => finished && setVisible(false));
     return () => anim.stop();

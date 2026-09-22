@@ -15,7 +15,7 @@ Tiga kotak per layar:
 |---|---|
 | Item di checklist | 36 (35 layar prototipe ditambah bottom bar) |
 | Rute ada | 13 |
-| Sesuai wireframe | 8 |
+| Sesuai wireframe | 9 |
 | Terhubung database | 0 |
 
 Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql` dan belum dipasang sebagai migrasi.
@@ -42,9 +42,11 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database: tidak perlu
 
 ### 4. Dashboard
-- [x] Rute ada: `src/app/(tabs)/index.tsx`
-- [ ] Sesuai wireframe: masih placeholder "Belum dibuat."
-- [ ] Terhubung database
+- [x] Rute ada: `src/app/(tabs)/index.tsx`, komponen di `src/features/home/`
+- [x] Sesuai wireframe: sapaan dengan nama panggilan, tombol cari dan notifikasi bertitik merah, kartu saldo hijau dengan hiasan dan pemilih dompet, ikon mata menyamarkan saldo, kartu Pemasukan dan Pengeluaran, petunjuk dengan Mengerti, lima aksi cepat, grafik pengeluaran kumulatif dibanding bulan lalu, empat transaksi terbaru, Lihat semua. Dicek berdampingan dengan prototipe (terang, gelap, id, en)
+- [x] Beda yang disengaja: ikon kategori memakai `fill`; kartu Pemasukan dan Pengeluaran berbayangan tipis seperti wireframe walau pedoman merek hanya mengizinkan bayangan di tombol ＋
+- [ ] Tombol cari, notifikasi, pemilih dompet, aksi cepat, grafik (ke Laporan), dan baris transaksi membuka layarnya (layar tujuan belum dibuat)
+- [ ] Terhubung database: saldo, grafik, dan transaksi masih DATA CONTOH dari prototipe (`src/features/home/sample-data.ts`); nama panggilan sudah dari isian onboarding
 
 ### 5. Daftar transaksi
 - [x] Rute ada: `src/app/(tabs)/transactions.tsx`
@@ -241,3 +243,4 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Token `on-primary` untuk teks di atas warna utama (putih di mode terang, gelap di mode gelap)
 - [x] Ikon Phosphor (`phosphor-react-native`): 57 ikon prototipe dipetakan ke Phosphor di `src/components/ui/icon.tsx`, diimpor per ikon. Mendukung bobot thin, light, regular, bold, fill, dan duotone
 - [ ] Skema database versi 1 dipasang sebagai migrasi
+- [x] Layar gagal membuka database (`src/db/database-gate.tsx`, tidak ada di wireframe). Web: "Artamu sedang terbuka di tab lain" dengan Muat ulang, karena penyimpanan browser hanya bisa dipakai satu tab (error `Invalid VFS state`). HP: "Data tidak bisa dibuka" dengan Coba lagi

@@ -3,7 +3,10 @@ import * as LocalAuthentication from 'expo-local-authentication';
 /** Ponsel punya sensor dan sudah ada sidik jari terdaftar. Selalu false di web. */
 export async function canUseBiometrics() {
   try {
-    return (await LocalAuthentication.hasHardwareAsync()) && (await LocalAuthentication.isEnrolledAsync());
+    return (
+      (await LocalAuthentication.hasHardwareAsync()) &&
+      (await LocalAuthentication.isEnrolledAsync())
+    );
   } catch {
     return false;
   }

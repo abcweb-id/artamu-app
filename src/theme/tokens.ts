@@ -78,3 +78,16 @@ export const categoryColors = {
 } as const;
 
 export type CategoryColor = keyof typeof categoryColors;
+
+/**
+ * Kartu saldo di Beranda: hijau merek di mode terang maupun gelap (bukan warna primary
+ * mode gelap yang lebih muda), sesuai prototipe.
+ */
+export const balanceCard = {
+  bg: '#0E6B53',
+  text: '#FFFFFF',
+  muted: '#BDE3D4',
+  inner: '#1B7C62',
+  /** Lingkaran hiasan: kuning aksen 70 persen. */
+  ornament: '#F6B93BB3',
+} as const;

@@ -3,7 +3,9 @@
     "BACK": "Kembali",
     "NOT_BUILT": "Belum dibuat.",
     "CURRENCY": "Rp",
-    "CANCEL": "Batal"
+    "CANCEL": "Batal",
+    "TODAY": "Hari ini",
+    "YESTERDAY": "Kemarin"
   },
   "TABS": {
     "HOME": "Beranda",
@@ -115,5 +117,42 @@
     "LABEL": "Ketik {{word}} untuk melanjutkan",
     "ERROR": "Ketik {{word}} untuk menghapus",
     "CONFIRM": "Hapus semua data"
+  },
+  "HOME": {
+    "GREETING": "Halo, {{name}}",
+    "GREETING_NO_NAME": "Halo",
+    "SEARCH": "Cari transaksi",
+    "NOTIFICATIONS": "Notifikasi",
+    "NOTIFICATIONS_UNREAD": "Notifikasi, {{count}} belum dibaca",
+    "SWITCH_WALLET": "Ganti dompet, sekarang {{wallet}}",
+    "SHOW_BALANCE": "Tampilkan saldo",
+    "HIDE_BALANCE": "Sembunyikan saldo",
+    "TOTAL_BALANCE": "Total saldo",
+    "INCOME": "Pemasukan",
+    "EXPENSE": "Pengeluaran",
+    "HINT_WALLET": "Ketuk nama dompet di kartu untuk berpindah dompet.",
+    "GOT_IT": "Mengerti",
+    "QUICK": {
+      "TRANSFER": "Transfer",
+      "BUDGET": "Anggaran",
+      "REPORT": "Laporan",
+      "RECURRING": "Rutin",
+      "DEBTS": "Hutang"
+    },
+    "SPENDING_TITLE": "Pengeluaran bulan ini",
+    "THIS_MONTH": "Bulan ini",
+    "SPENDING_MORE": "Sampai tanggal {{day}} keluar <b>{{amount}}</b>, {{diff}} lebih banyak dari {{month}} di tanggal yang sama.",
+    "SPENDING_LESS": "Sampai tanggal {{day}} keluar <b>{{amount}}</b>, {{diff}} lebih hemat dari {{month}} di tanggal yang sama.",
+    "CHART_LABEL": "Pengeluaran kumulatif bulan ini dibanding {{month}}. Buka laporan",
+    "RECENT": "Transaksi terbaru",
+    "SEE_ALL": "Lihat semua"
+  },
+  "DB_ERROR": {
+    "WEB_TITLE": "Artamu sedang terbuka di tab lain",
+    "WEB_BODY": "Data di browser hanya bisa dipakai satu tab sekaligus. Tutup tab Artamu yang lain, lalu muat ulang halaman ini.",
+    "WEB_RETRY": "Muat ulang",
+    "TITLE": "Data tidak bisa dibuka",
+    "BODY": "Terjadi masalah saat membuka catatanmu. Coba lagi; kalau masih gagal, mulai ulang aplikasi.",
+    "RETRY": "Coba lagi"
   }
 }

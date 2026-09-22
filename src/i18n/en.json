@@ -3,7 +3,9 @@
     "BACK": "Back",
     "NOT_BUILT": "Not built yet.",
     "CURRENCY": "Rp",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "TODAY": "Today",
+    "YESTERDAY": "Yesterday"
   },
   "TABS": {
     "HOME": "Home",
@@ -115,5 +117,42 @@
     "LABEL": "Type {{word}} to continue",
     "ERROR": "Type {{word}} to erase",
     "CONFIRM": "Erase all data"
+  },
+  "HOME": {
+    "GREETING": "Hi, {{name}}",
+    "GREETING_NO_NAME": "Hi",
+    "SEARCH": "Search transactions",
+    "NOTIFICATIONS": "Notifications",
+    "NOTIFICATIONS_UNREAD": "Notifications, {{count}} unread",
+    "SWITCH_WALLET": "Switch wallet, currently {{wallet}}",
+    "SHOW_BALANCE": "Show balance",
+    "HIDE_BALANCE": "Hide balance",
+    "TOTAL_BALANCE": "Total balance",
+    "INCOME": "Income",
+    "EXPENSE": "Expenses",
+    "HINT_WALLET": "Tap the wallet name on the card to switch wallets.",
+    "GOT_IT": "Got it",
+    "QUICK": {
+      "TRANSFER": "Transfer",
+      "BUDGET": "Budget",
+      "REPORT": "Report",
+      "RECURRING": "Recurring",
+      "DEBTS": "Debts"
+    },
+    "SPENDING_TITLE": "Spending this month",
+    "THIS_MONTH": "This month",
+    "SPENDING_MORE": "By day {{day}} you spent <b>{{amount}}</b>, {{diff}} more than {{month}} by the same day.",
+    "SPENDING_LESS": "By day {{day}} you spent <b>{{amount}}</b>, {{diff}} less than {{month}} by the same day.",
+    "CHART_LABEL": "Cumulative spending this month compared with {{month}}. Open report",
+    "RECENT": "Recent transactions",
+    "SEE_ALL": "See all"
+  },
+  "DB_ERROR": {
+    "WEB_TITLE": "Artamu is open in another tab",
+    "WEB_BODY": "Browser storage can only be used by one tab at a time. Close the other Artamu tabs, then reload this page.",
+    "WEB_RETRY": "Reload",
+    "TITLE": "Your data couldn't be opened",
+    "BODY": "Something went wrong while opening your records. Try again; if it keeps failing, restart the app.",
+    "RETRY": "Try again"
   }
 }

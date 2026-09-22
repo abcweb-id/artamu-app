@@ -10,7 +10,6 @@ import {
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { SQLiteProvider } from 'expo-sqlite';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
 import { useEffect } from 'react';
@@ -18,7 +17,7 @@ import { AppState, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { SplashOverlay } from '@/components/splash-overlay';
-import { DATABASE_NAME, migrateDbIfNeeded } from '@/db/client';
+import { DatabaseGate } from '@/db/database-gate';
 import { useAppStore } from '@/stores/app-store';
 import { palette, themeVars } from '@/theme/tokens';
 
@@ -58,7 +57,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* vars() hanya terbaca oleh komponen yang dibungkus NativeWind, jadi dipasang di View. */}
       <View style={[{ flex: 1 }, themeVars[scheme]]}>
-        <SQLiteProvider databaseName={DATABASE_NAME} onInit={migrateDbIfNeeded}>
+        <DatabaseGate>
           <ThemeProvider value={navTheme}>
             <BottomSheetModalProvider>
               <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
@@ -66,7 +65,7 @@ export default function RootLayout() {
               <SplashOverlay />
             </BottomSheetModalProvider>
           </ThemeProvider>
-        </SQLiteProvider>
+        </DatabaseGate>
       </View>
     </GestureHandlerRootView>
   );
