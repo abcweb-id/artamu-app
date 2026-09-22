@@ -14,8 +14,8 @@ Tiga kotak per layar:
 | | Jumlah |
 |---|---|
 | Item di checklist | 36 (35 layar prototipe ditambah bottom bar) |
-| Rute ada | 9 |
-| Sesuai wireframe | 3 |
+| Rute ada | 13 |
+| Sesuai wireframe | 8 |
 | Terhubung database | 0 |
 
 Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql` dan belum dipasang sebagai migrasi.
@@ -30,10 +30,10 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 ### 2. Pertama kali buka
 - [x] Rute ada: `src/app/(onboarding)/selamat-datang.tsx`
 - [x] Sesuai wireframe: simbol dan ARTAMU, judul, tiga poin fitur, tombol "Buat PIN dan mulai", dan "Pulihkan dari cadangan". Dicek berdampingan dengan prototipe di mode terang dan gelap
-- [ ] Tombol "Buat PIN dan mulai" ke layar Isi nama panggilan (sementara langsung ke Beranda, karena layar itu belum dibuat)
+- [x] Tombol "Buat PIN dan mulai" ke layar Isi nama panggilan
 - [ ] Tombol "Pulihkan dari cadangan" berfungsi (layar cadangan belum dibuat)
 - [ ] Terhubung database: status onboarding masih di memori, hilang setiap aplikasi ditutup
-- [x] Tombol berpindah ke Beranda (diuji dengan klik di browser)
+- [x] Alur lengkap sampai Beranda diuji dengan klik di browser (id dan en, terang dan gelap)
 
 ### 3. Bottom bar
 - [x] Rute ada: `src/app/(tabs)/_layout.tsx` dengan tab bar sendiri di `src/components/tab-bar.tsx`
@@ -70,29 +70,34 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 ## Alur pertama kali buka
 
 ### 9. Isi nama panggilan
-- [ ] Rute ada
-- [ ] Sesuai wireframe
-- [ ] Terhubung database
+- [x] Rute ada: `src/app/(onboarding)/nama.tsx`
+- [x] Sesuai wireframe: tombol kembali, lingkaran ikon, judul, kolom nama (maks 24 huruf), Lanjut buat PIN, Lewati
+- [ ] Terhubung database: nama masih di memori (`src/stores/onboarding-store.ts`), nanti ke tabel settings
 
 ### 10. Dompet dan saldo awal
-- [ ] Rute ada
-- [ ] Sesuai wireframe
-- [ ] Terhubung database
+- [x] Rute ada: `src/app/(onboarding)/dompet.tsx`
+- [x] Sesuai wireframe: Tunai, Bank, E-wallet dengan kotak centang (Tunai dan Bank terpilih dari awal), isian saldo berawalan Rp dan bertitik ribuan, pesan "Pilih minimal satu dompet", Langkah 2 dari 3
+- [ ] Tombol "Tambah dompet lain" berfungsi (formulir dompet belum dibuat)
+- [ ] Terhubung database: pilihan dan saldo masih di memori, nanti jadi baris wallets dan transaksi saldo awal
 
 ### 11. Izin notifikasi
-- [ ] Rute ada
-- [ ] Sesuai wireframe
-- [ ] Terhubung database
+- [x] Rute ada: `src/app/(onboarding)/izin-notifikasi.tsx`
+- [x] Sesuai wireframe: lingkaran lonceng, tiga poin, Izinkan notifikasi, Nanti saja. Keduanya lanjut ke Beranda
+- [ ] Meminta izin sistem sungguhan (expo-notifications belum dipasang)
+- [ ] Terhubung database: tidak perlu
 
-### 12. Login PIN
-- [x] Rute ada: `src/app/(auth)/kunci.tsx`, belum bisa dibuka karena kunci PIN belum aktif
-- [ ] Sesuai wireframe: baru teks "Masukkan PIN", belum ada titik PIN dan keypad
-- [ ] Terhubung database: hash PIN nanti di expo-secure-store, bukan SQLite
+### 12. Login PIN (dan Buat PIN, Ulangi PIN)
+- [x] Rute ada: Buat PIN dan Ulangi PIN di `src/app/(onboarding)/buat-pin.tsx`, Masukkan PIN di `src/app/(auth)/kunci.tsx`
+- [x] Sesuai wireframe: titik PIN, keypad 72 px, tombol hapus; Masukkan PIN dengan logo, sidik jari, dan Lupa PIN
+- [x] PIN kedua berbeda: "PIN tidak sama. Ulangi dari awal."; PIN salah: "PIN salah. Sisa N percobaan."
+- [x] Aplikasi ke latar belakang lalu dibuka lagi meminta PIN (diuji di browser; tolong cek di HP)
+- [ ] Tombol sidik jari dan Lupa PIN berfungsi (belum dibuat)
+- [ ] Terhubung database: PIN masih di memori, nanti hash-nya di expo-secure-store, bukan SQLite
 
 ### 13. PIN terkunci
-- [ ] Rute ada
-- [ ] Sesuai wireframe
-- [ ] Terhubung database
+- [x] Rute ada: bagian dari `src/app/(auth)/kunci.tsx`
+- [x] Sesuai wireframe: lingkaran merah, hitung mundur 0.30 setelah 5 kali salah, keypad pudar dan tidak bisa ditekan
+- [ ] Terhubung database: tidak perlu (waktu kunci nanti di expo-secure-store)
 
 ## Keadaan khusus
 
@@ -228,6 +233,8 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Komponen dasar di `src/components/ui/`: `Icon` (57 ikon, gambar dari Phosphor), `Button` (utama dan tautan), `IconBadge`, `ListRow`, `Card`, `ScreenTitle`, `SectionLabel`
 - [x] `CategoryIcon`: lingkaran 40/48 px, ikon `fill` 55 persen, delapan pasangan warna kategori (`categoryColors` di `src/theme/tokens.ts`). Belum dipakai di layar mana pun
 - [x] Judul tab browser di web: "{nama halaman} - ARTAMU" lewat prop `pageTitle` di `Screen` (`src/components/page-title.tsx`)
+- [x] Terjemahan id dan en (`src/i18n/id.json`, `src/i18n/en.json`) dengan kunci huruf kapital, misalnya `t('PIN.LOGIN_TITLE')`. Kunci salah ketik atau terjemahan en yang terlewat gagal di typecheck. Bahasa mengikuti perangkat: Indonesia untuk id, selain itu en
+- [ ] Pilihan bahasa di Pengaturan
 - [x] Token `on-primary` untuk teks di atas warna utama (putih di mode terang, gelap di mode gelap)
 - [x] Ikon Phosphor (`phosphor-react-native`): 57 ikon prototipe dipetakan ke Phosphor di `src/components/ui/icon.tsx`, diimpor per ikon. Mendukung bobot thin, light, regular, bold, fill, dan duotone
 - [ ] Skema database versi 1 dipasang sebagai migrasi

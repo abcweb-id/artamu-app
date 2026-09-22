@@ -27,21 +27,21 @@ export default function TabLayout() {
       <Tabs tabBar={(props) => <TabBar {...props} />} screenOptions={{ headerShown: false }}>
         <Tabs.Screen
           name="index"
-          options={{ title: t('tabs.home'), tabBarIcon: tabIcon('home') }}
+          options={{ title: t('TABS.HOME'), tabBarIcon: tabIcon('home') }}
         />
         <Tabs.Screen
           name="transaksi"
-          options={{ title: t('tabs.transactions'), tabBarIcon: tabIcon('list') }}
+          options={{ title: t('TABS.TRANSACTIONS'), tabBarIcon: tabIcon('list') }}
         />
         {/* Tekan dicegat TabBar untuk membuka lembar input; layarnya tidak pernah tampil. */}
-        <Tabs.Screen name="tambah" options={{ tabBarAccessibilityLabel: t('tabs.add') }} />
+        <Tabs.Screen name="tambah" options={{ tabBarAccessibilityLabel: t('TABS.ADD') }} />
         <Tabs.Screen
           name="pengaturan"
-          options={{ title: t('tabs.settings'), tabBarIcon: tabIcon('settings') }}
+          options={{ title: t('TABS.SETTINGS'), tabBarIcon: tabIcon('settings') }}
         />
         <Tabs.Screen
           name="akun"
-          options={{ title: t('tabs.account'), tabBarIcon: tabIcon('user') }}
+          options={{ title: t('TABS.ACCOUNT'), tabBarIcon: tabIcon('user') }}
         />
       </Tabs>
       <InputSheet />

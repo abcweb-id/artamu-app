@@ -1,0 +1,89 @@
+{
+  "COMMON": {
+    "BACK": "Back",
+    "NOT_BUILT": "Not built yet.",
+    "CURRENCY": "Rp"
+  },
+  "TABS": {
+    "HOME": "Home",
+    "TRANSACTIONS": "Transactions",
+    "ADD": "Add transaction",
+    "SETTINGS": "Settings",
+    "ACCOUNT": "Account"
+  },
+  "WELCOME": {
+    "PAGE_TITLE": "Welcome",
+    "TITLE": "Manage your money with ease",
+    "POINTS": {
+      "FAST": {
+        "TITLE": "Three taps, done",
+        "SUBTITLE": "Amount, category, save"
+      },
+      "LOCAL": {
+        "TITLE": "Stored on your phone",
+        "SUBTITLE": "No account and no internet needed"
+      },
+      "RECURRING": {
+        "TITLE": "Recurring bills record themselves",
+        "SUBTITLE": "Set once, runs every month"
+      }
+    },
+    "START": "Create PIN and start",
+    "RESTORE": "Restore from backup"
+  },
+  "NICKNAME": {
+    "PAGE_TITLE": "Nickname",
+    "TITLE": "What should we call you?",
+    "SUBTITLE": "Only used to greet you on the home screen. Stored on this phone and can be changed anytime.",
+    "LABEL": "Nickname",
+    "PLACEHOLDER": "Musyaffa",
+    "NEXT": "Continue to create PIN",
+    "SKIP": "Skip"
+  },
+  "WALLET_SETUP": {
+    "PAGE_TITLE": "Wallets and opening balance",
+    "TITLE": "Where is your money right now?",
+    "SUBTITLE": "Pick the wallets you use and enter their current balance. A rough guess is fine, you can adjust it later.",
+    "WALLETS": {
+      "CASH": "Cash",
+      "BANK": "Bank",
+      "EWALLET": "E-wallet"
+    },
+    "ADD": "Add another wallet",
+    "ERROR_NONE": "Pick at least one wallet",
+    "STEP": "Step {{current}} of {{total}}",
+    "NEXT": "Continue to create PIN"
+  },
+  "PIN": {
+    "CREATE_TITLE": "Create PIN",
+    "CREATE_SUBTITLE": "Four digits to lock your records",
+    "CONFIRM_TITLE": "Repeat PIN",
+    "CONFIRM_SUBTITLE": "Enter it once more to make sure",
+    "LOGIN_TITLE": "Enter PIN",
+    "LOGIN_SUBTITLE": "Your records are stored only on this phone",
+    "MISMATCH": "PINs don't match. Start again.",
+    "WRONG": "Wrong PIN. {{count}} attempts left.",
+    "FORGOT": "Forgot PIN",
+    "LOCKED_TITLE": "Too many attempts",
+    "LOCKED_SUBTITLE": "For your security, the PIN is temporarily locked",
+    "LOCKED_HINT": "Try again when the countdown ends",
+    "PROGRESS": "{{count}} of 4 digits",
+    "DELETE": "Delete digit",
+    "BIOMETRIC": "Unlock with fingerprint"
+  },
+  "NOTIF_PERMISSION": {
+    "PAGE_TITLE": "Notification permission",
+    "TITLE": "Can we remind you?",
+    "SUBTITLE": "Notifications are only used for these three things, never for promotions.",
+    "POINTS": {
+      "DAILY": "A reminder to log, once a day",
+      "RECURRING": "Recurring bills that were just recorded",
+      "DEBTS": "Debts and loans nearing their due date"
+    },
+    "ALLOW": "Allow notifications",
+    "LATER": "Not now"
+  },
+  "SHEET": {
+    "NEW_TRANSACTION": "New transaction"
+  }
+}

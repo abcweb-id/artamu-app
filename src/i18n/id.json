@@ -1,35 +1,89 @@
 {
-  "tabs": {
-    "home": "Beranda",
-    "transactions": "Transaksi",
-    "add": "Tambah transaksi",
-    "settings": "Pengaturan",
-    "account": "Akun"
+  "COMMON": {
+    "BACK": "Kembali",
+    "NOT_BUILT": "Belum dibuat.",
+    "CURRENCY": "Rp"
   },
-  "onboarding": {
-    "pageTitle": "Selamat datang",
-    "title": "Kelola Hartamu dengan mudah",
-    "points": {
-      "fast": {
-        "title": "Tiga ketukan, selesai",
-        "subtitle": "Nominal, kategori, simpan"
+  "TABS": {
+    "HOME": "Beranda",
+    "TRANSACTIONS": "Transaksi",
+    "ADD": "Tambah transaksi",
+    "SETTINGS": "Pengaturan",
+    "ACCOUNT": "Akun"
+  },
+  "WELCOME": {
+    "PAGE_TITLE": "Selamat datang",
+    "TITLE": "Kelola Hartamu dengan mudah",
+    "POINTS": {
+      "FAST": {
+        "TITLE": "Tiga ketukan, selesai",
+        "SUBTITLE": "Nominal, kategori, simpan"
       },
-      "local": {
-        "title": "Tersimpan di ponselmu",
-        "subtitle": "Tanpa akun dan tanpa internet"
+      "LOCAL": {
+        "TITLE": "Tersimpan di ponselmu",
+        "SUBTITLE": "Tanpa akun dan tanpa internet"
       },
-      "recurring": {
-        "title": "Tagihan rutin tercatat sendiri",
-        "subtitle": "Atur sekali, jalan tiap bulan"
+      "RECURRING": {
+        "TITLE": "Tagihan rutin tercatat sendiri",
+        "SUBTITLE": "Atur sekali, jalan tiap bulan"
       }
     },
-    "start": "Buat PIN dan mulai",
-    "restore": "Pulihkan dari cadangan"
+    "START": "Buat PIN dan mulai",
+    "RESTORE": "Pulihkan dari cadangan"
   },
-  "lock": {
-    "title": "Masukkan PIN"
+  "NICKNAME": {
+    "PAGE_TITLE": "Nama panggilan",
+    "TITLE": "Mau dipanggil siapa?",
+    "SUBTITLE": "Hanya untuk sapaan di beranda. Tersimpan di ponsel ini dan bisa diubah kapan saja.",
+    "LABEL": "Nama panggilan",
+    "PLACEHOLDER": "Musyaffa",
+    "NEXT": "Lanjut buat PIN",
+    "SKIP": "Lewati"
   },
-  "sheet": {
-    "newTransaction": "Transaksi baru"
+  "WALLET_SETUP": {
+    "PAGE_TITLE": "Dompet dan saldo awal",
+    "TITLE": "Di mana uangmu sekarang?",
+    "SUBTITLE": "Pilih dompet yang kamu pakai dan isi saldonya saat ini. Boleh dikira-kira, nanti bisa disesuaikan.",
+    "WALLETS": {
+      "CASH": "Tunai",
+      "BANK": "Bank",
+      "EWALLET": "E-wallet"
+    },
+    "ADD": "Tambah dompet lain",
+    "ERROR_NONE": "Pilih minimal satu dompet",
+    "STEP": "Langkah {{current}} dari {{total}}",
+    "NEXT": "Lanjut buat PIN"
+  },
+  "PIN": {
+    "CREATE_TITLE": "Buat PIN",
+    "CREATE_SUBTITLE": "Empat angka untuk mengunci catatanmu",
+    "CONFIRM_TITLE": "Ulangi PIN",
+    "CONFIRM_SUBTITLE": "Masukkan sekali lagi untuk memastikan",
+    "LOGIN_TITLE": "Masukkan PIN",
+    "LOGIN_SUBTITLE": "Catatanmu hanya tersimpan di ponsel ini",
+    "MISMATCH": "PIN tidak sama. Ulangi dari awal.",
+    "WRONG": "PIN salah. Sisa {{count}} percobaan.",
+    "FORGOT": "Lupa PIN",
+    "LOCKED_TITLE": "Terlalu banyak percobaan",
+    "LOCKED_SUBTITLE": "Demi keamanan, PIN dikunci sementara",
+    "LOCKED_HINT": "Coba lagi setelah hitungan selesai",
+    "PROGRESS": "{{count}} dari 4 digit",
+    "DELETE": "Hapus digit",
+    "BIOMETRIC": "Buka dengan sidik jari"
+  },
+  "NOTIF_PERMISSION": {
+    "PAGE_TITLE": "Izin notifikasi",
+    "TITLE": "Boleh kami ingatkan?",
+    "SUBTITLE": "Notifikasi dipakai hanya untuk tiga hal ini, tanpa promosi.",
+    "POINTS": {
+      "DAILY": "Pengingat mencatat, sekali sehari",
+      "RECURRING": "Tagihan rutin yang baru dicatat",
+      "DEBTS": "Hutang piutang yang mendekati jatuh tempo"
+    },
+    "ALLOW": "Izinkan notifikasi",
+    "LATER": "Nanti saja"
+  },
+  "SHEET": {
+    "NEW_TRANSACTION": "Transaksi baru"
   }
 }

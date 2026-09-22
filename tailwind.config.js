@@ -16,6 +16,8 @@ module.exports = {
         text: 'rgb(var(--color-text) / <alpha-value>)',
         muted: 'rgb(var(--color-muted) / <alpha-value>)',
         line: 'rgb(var(--color-line) / <alpha-value>)',
+        // Latar tombol keypad PIN dan nominal.
+        key: 'rgb(var(--color-key) / <alpha-value>)',
         'primary-soft': 'rgb(var(--color-primary-soft) / <alpha-value>)',
         'primary-ink': 'rgb(var(--color-primary-ink) / <alpha-value>)',
         income: 'rgb(var(--color-income) / <alpha-value>)',

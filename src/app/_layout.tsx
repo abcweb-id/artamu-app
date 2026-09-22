@@ -14,7 +14,7 @@ import { SQLiteProvider } from 'expo-sqlite';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { AppState, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { DATABASE_NAME, migrateDbIfNeeded } from '@/db/client';
@@ -78,6 +78,16 @@ export default function RootLayout() {
 function RootStack() {
   const onboarded = useAppStore((s) => s.onboarded);
   const locked = useAppStore((s) => s.locked);
+  const lock = useAppStore((s) => s.lock);
+
+  // Kembali dari latar belakang meminta PIN lagi. Nanti jedanya mengikuti
+  // pengaturan Kunci otomatis; sekarang langsung terkunci.
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'background') lock();
+    });
+    return () => sub.remove();
+  }, [lock]);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

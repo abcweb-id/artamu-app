@@ -10,12 +10,12 @@ type ScreenProps = ViewProps & {
   bottomInset?: boolean;
 };
 
-/** Latar dan jarak tepi layar standar: 20 di kiri-kanan. Tanpa bayangan. */
+/** Latar dan jarak tepi layar standar: 6 di bawah status bar, 20 di kiri-kanan. Tanpa bayangan. */
 export function Screen({ className, children, pageTitle, bottomInset, ...rest }: ScreenProps) {
   return (
     <SafeAreaView edges={bottomInset ? ['top', 'bottom'] : ['top']} className="flex-1 bg-canvas">
       <PageTitle title={pageTitle} />
-      <View className={`flex-1 px-5 ${className ?? ''}`} {...rest}>
+      <View className={`flex-1 px-5 pt-1.5 ${className ?? ''}`} {...rest}>
         {children}
       </View>
     </SafeAreaView>

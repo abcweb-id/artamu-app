@@ -39,7 +39,7 @@ export function InputSheet() {
       <BottomSheetView>
         {/* className tidak terbaca di BottomSheetView, jadi jarak dipasang di View biasa. */}
         <View className="px-5 pb-10 pt-2">
-          <Text className="font-display text-xl text-text">{t('sheet.newTransaction')}</Text>
+          <Text className="font-display text-xl text-text">{t('SHEET.NEW_TRANSACTION')}</Text>
         </View>
       </BottomSheetView>
     </BottomSheetModal>
