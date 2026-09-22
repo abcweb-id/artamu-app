@@ -1,0 +1,34 @@
+{
+  "tabs": {
+    "home": "Beranda",
+    "transactions": "Transaksi",
+    "add": "Tambah transaksi",
+    "settings": "Pengaturan",
+    "account": "Akun"
+  },
+  "onboarding": {
+    "title": "Kelola Hartamu dengan mudah",
+    "points": {
+      "fast": {
+        "title": "Tiga ketukan, selesai",
+        "subtitle": "Nominal, kategori, simpan"
+      },
+      "local": {
+        "title": "Tersimpan di ponselmu",
+        "subtitle": "Tanpa akun dan tanpa internet"
+      },
+      "recurring": {
+        "title": "Tagihan rutin tercatat sendiri",
+        "subtitle": "Atur sekali, jalan tiap bulan"
+      }
+    },
+    "start": "Buat PIN dan mulai",
+    "restore": "Pulihkan dari cadangan"
+  },
+  "lock": {
+    "title": "Masukkan PIN"
+  },
+  "sheet": {
+    "newTransaction": "Transaksi baru"
+  }
+}
