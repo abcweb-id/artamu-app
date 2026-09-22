@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 
+import type { StarterWallet } from './onboarding-store';
+
 /** Salah PIN sebanyak ini mengunci layar PIN sementara. */
 export const MAX_PIN_ATTEMPTS = 5;
 export const PIN_LOCK_MS = 30_000;
@@ -18,6 +20,8 @@ type AppState = {
   pin: string | null;
   /** Buka dengan sidik jari. Hanya aktif kalau pengguna memilihnya sendiri. */
   biometricEnabled: boolean;
+  /** Dompet yang saldo dan transaksinya tampil di Beranda dan Transaksi. */
+  activeWallet: StarterWallet;
   /** Saldo disamarkan dengan titik (ikon mata di kartu saldo). */
   hideBalance: boolean;
   /** Petunjuk yang sudah ditutup dengan "Mengerti". Nanti disimpan di tabel settings. */
@@ -28,6 +32,7 @@ type AppState = {
   setOnboarded: (value: boolean) => void;
   setPin: (pin: string) => void;
   setBiometricEnabled: (value: boolean) => void;
+  setActiveWallet: (wallet: StarterWallet) => void;
   toggleHideBalance: () => void;
   dismissHint: (key: string) => void;
   lock: () => void;
@@ -44,6 +49,7 @@ const initialState = {
   locked: false,
   pin: null,
   biometricEnabled: false,
+  activeWallet: 'BANK' as StarterWallet,
   hideBalance: false,
   dismissedHints: [] as string[],
   failedAttempts: 0,
@@ -55,6 +61,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   setOnboarded: (onboarded) => set({ onboarded }),
   setPin: (pin) => set({ pin }),
   setBiometricEnabled: (biometricEnabled) => set({ biometricEnabled }),
+  setActiveWallet: (activeWallet) => set({ activeWallet }),
   toggleHideBalance: () => set((s) => ({ hideBalance: !s.hideBalance })),
   dismissHint: (key) => set((s) => ({ dismissedHints: [...s.dismissedHints, key] })),
   lock: () => {

@@ -154,5 +154,24 @@
     "TITLE": "Your data couldn't be opened",
     "BODY": "Something went wrong while opening your records. Try again; if it keeps failing, restart the app.",
     "RETRY": "Try again"
+  },
+  "LIST": {
+    "SEARCH_PLACEHOLDER": "Search name or category",
+    "SEARCH_LABEL": "Search transactions",
+    "FILTER": "Filters",
+    "PREV_MONTH": "Previous month",
+    "NEXT_MONTH": "Next month",
+    "OPEN_REPORT": "Open this month's report",
+    "REMAINING": "Remaining",
+    "ROW_LABEL": "{{label}} {{amount}}. See transactions",
+    "HINT": "Press and hold a transaction to duplicate it, select several, or delete.",
+    "NO_RESULTS": "No transactions match “{{query}}”."
+  },
+  "WALLET_PICKER": {
+    "TITLE": "Choose wallet",
+    "SUBTITLE": "The balance and transactions shown follow this wallet",
+    "MANAGE": "Manage wallets",
+    "TRANSFER": "Transfer",
+    "SELECTED": "{{wallet}}, selected"
   }
 }

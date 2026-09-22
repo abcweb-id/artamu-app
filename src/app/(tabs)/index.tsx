@@ -1,16 +1,21 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { ScrollView, Text, View } from 'react-native';
 
 import { Screen } from '@/components/screen';
+import { TAB_SCROLL_BOTTOM_PADDING } from '@/components/tab-bar';
 import { Button } from '@/components/ui/button';
 import { HintBanner } from '@/components/ui/hint-banner';
 import { IconButton } from '@/components/ui/icon-button';
 import { BalanceCard } from '@/features/home/balance-card';
 import { QuickActions } from '@/features/home/quick-actions';
-import { sampleHome as data } from '@/features/home/sample-data';
+import { sampleHome } from '@/features/home/sample-data';
 import { SpendingChart } from '@/features/home/spending-chart';
+import { SAMPLE_TODAY } from '@/features/transactions/sample-data';
 import { TransactionRow } from '@/features/transactions/transaction-row';
+import { useActiveWallet } from '@/features/wallets/use-active-wallet';
+import { WalletSheet } from '@/features/wallets/wallet-sheet';
 import { monthName, relativeDayLabel } from '@/lib/date';
 import { formatRp } from '@/lib/money';
 import { useOnboardingStore } from '@/stores/onboarding-store';
@@ -31,15 +36,20 @@ export default function Home() {
     .trim()
     .split(' ')[0];
   const locale = i18n.language === 'id' ? 'id-ID' : 'en-US';
+  const { key: walletKey, data } = useActiveWallet();
+  const [walletSheetOpen, setWalletSheetOpen] = useState(false);
 
-  const day = Number(data.today.slice(8));
+  const day = Number(SAMPLE_TODAY.slice(8));
   const spent = data.spendingThisMonth[day - 1];
   const diff = Math.round((data.spendingLastMonth[day - 1] - spent) / 1000) * 1000;
-  const lastMonth = monthName(data.today, locale, -1);
+  const lastMonth = monthName(SAMPLE_TODAY, locale, -1);
 
   return (
     <Screen pageTitle={t('TABS.HOME')}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="pb-10">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: TAB_SCROLL_BOTTOM_PADDING }}
+      >
         <View className="flex-row items-center justify-between pt-1">
           <Text className="font-display text-xl text-text">
             {nickname ? t('HOME.GREETING', { name: nickname }) : t('HOME.GREETING_NO_NAME')}
@@ -48,19 +58,20 @@ export default function Home() {
             <IconButton icon="search" label={t('HOME.SEARCH')} />
             <IconButton
               icon="bell"
-              badge={data.unreadNotifications > 0}
-              label={t('HOME.NOTIFICATIONS_UNREAD', { count: data.unreadNotifications })}
+              badge={sampleHome.unreadNotifications > 0}
+              label={t('HOME.NOTIFICATIONS_UNREAD', { count: sampleHome.unreadNotifications })}
             />
           </View>
         </View>
 
         <View className="mt-4">
           <BalanceCard
-            walletName={t(`WALLET_SETUP.WALLETS.${data.walletKey}`)}
-            walletIcon={data.walletIcon}
+            walletName={t(`WALLET_SETUP.WALLETS.${walletKey}`)}
+            walletIcon={data.icon}
             balance={data.balance}
             income={data.income}
             expense={data.expense}
+            onSwitchWallet={() => setWalletSheetOpen(true)}
           />
         </View>
 
@@ -107,11 +118,11 @@ export default function Home() {
             />
           }
         />
-        {data.recent.map((tx) => (
+        {data.transactions.slice(0, 4).map((tx) => (
           <TransactionRow
             key={tx.id}
             title={tx.title}
-            subtitle={`${relativeDayLabel(tx.date, data.today, { today: t('COMMON.TODAY'), yesterday: t('COMMON.YESTERDAY') }, locale)}, ${tx.category}`}
+            subtitle={`${relativeDayLabel(tx.date, SAMPLE_TODAY, { today: t('COMMON.TODAY'), yesterday: t('COMMON.YESTERDAY') }, locale)}, ${tx.categoryShort}`}
             icon={tx.icon}
             color={tx.color}
             kind={tx.kind}
@@ -119,6 +130,7 @@ export default function Home() {
           />
         ))}
       </ScrollView>
+      <WalletSheet open={walletSheetOpen} onClose={() => setWalletSheetOpen(false)} />
     </Screen>
   );
 }

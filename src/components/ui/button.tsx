@@ -4,9 +4,10 @@ type ButtonProps = Omit<PressableProps, 'children'> & {
   label: string;
   /**
    * primary: tombol utama selebar layar. outline: garis tipis, teks hijau.
-   * link: teks hijau tanpa latar. secondary dan danger: tombol di lembar bawah (Batal, Hapus).
+   * link: teks hijau tanpa latar. secondary, solid, dan danger: tombol di lembar bawah
+   * (Batal, Transfer, Hapus), sudut 16.
    */
-  variant?: 'primary' | 'outline' | 'link' | 'secondary' | 'danger';
+  variant?: 'primary' | 'outline' | 'link' | 'secondary' | 'solid' | 'danger';
   className?: string;
 };
 
@@ -24,22 +25,17 @@ export function Button({ label, variant = 'primary', className, disabled, ...res
     );
   }
 
-  if (variant === 'secondary' || variant === 'danger') {
-    const danger = variant === 'danger';
+  if (variant === 'secondary' || variant === 'solid' || variant === 'danger') {
+    const bg = { secondary: 'bg-key', solid: 'bg-primary', danger: 'bg-expense' }[variant];
+    const fg = { secondary: 'text-text', solid: 'text-on-primary', danger: 'text-canvas' }[variant];
     return (
       <Pressable
         accessibilityRole="button"
         disabled={disabled}
-        className={`items-center rounded-2xl py-[13px] active:opacity-80 ${
-          danger ? 'bg-expense' : 'bg-key'
-        } ${className ?? ''}`}
+        className={`items-center rounded-2xl py-[13px] active:opacity-80 ${bg} ${className ?? ''}`}
         {...rest}
       >
-        <Text
-          className={`text-[15px] font-semibold leading-[22px] ${danger ? 'text-canvas' : 'text-text'}`}
-        >
-          {label}
-        </Text>
+        <Text className={`text-[15px] font-semibold leading-[22px] ${fg}`}>{label}</Text>
       </Pressable>
     );
   }

@@ -8,8 +8,11 @@ import { Icon, type IconName } from './icon';
 type CategoryIconProps = {
   name: IconName;
   color: CategoryColor;
-  /** list: 40 px di baris transaksi. sheet: 48 px di lembar input. */
-  variant?: 'list' | 'sheet';
+  /**
+   * list: 40 px di baris transaksi. sheet: 48 px di lembar input.
+   * compact: 34 px di dalam kotak per hari di Daftar transaksi (mengikuti wireframe).
+   */
+  variant?: 'list' | 'sheet' | 'compact';
 };
 
 /**
@@ -19,7 +22,7 @@ type CategoryIconProps = {
 export function CategoryIcon({ name, color, variant = 'list' }: CategoryIconProps) {
   const dark = useColorScheme().colorScheme === 'dark';
   const pair = categoryColors[color];
-  const size = variant === 'sheet' ? 48 : 40;
+  const size = variant === 'sheet' ? 48 : variant === 'compact' ? 34 : 40;
   // 55 persen dari diameter, dibulatkan ke angka genap.
   const iconSize = Math.round((size * 0.55) / 2) * 2;
 

@@ -33,7 +33,10 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
   setNickname: (nickname) => set({ nickname }),
   toggleWallet: (wallet) =>
     set((s) => ({
-      wallets: { ...s.wallets, [wallet]: { ...s.wallets[wallet], selected: !s.wallets[wallet].selected } },
+      wallets: {
+        ...s.wallets,
+        [wallet]: { ...s.wallets[wallet], selected: !s.wallets[wallet].selected },
+      },
     })),
   setWalletAmount: (wallet, amount) =>
     set((s) => ({ wallets: { ...s.wallets, [wallet]: { ...s.wallets[wallet], amount } } })),

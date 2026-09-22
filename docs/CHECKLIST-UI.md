@@ -15,7 +15,7 @@ Tiga kotak per layar:
 |---|---|
 | Item di checklist | 36 (35 layar prototipe ditambah bottom bar) |
 | Rute ada | 13 |
-| Sesuai wireframe | 9 |
+| Sesuai wireframe | 10 |
 | Terhubung database | 0 |
 
 Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql` dan belum dipasang sebagai migrasi.
@@ -45,13 +45,18 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Rute ada: `src/app/(tabs)/index.tsx`, komponen di `src/features/home/`
 - [x] Sesuai wireframe: sapaan dengan nama panggilan, tombol cari dan notifikasi bertitik merah, kartu saldo hijau dengan hiasan dan pemilih dompet, ikon mata menyamarkan saldo, kartu Pemasukan dan Pengeluaran, petunjuk dengan Mengerti, lima aksi cepat, grafik pengeluaran kumulatif dibanding bulan lalu, empat transaksi terbaru, Lihat semua. Dicek berdampingan dengan prototipe (terang, gelap, id, en)
 - [x] Beda yang disengaja: ikon kategori memakai `fill`; kartu Pemasukan dan Pengeluaran berbayangan tipis seperti wireframe walau pedoman merek hanya mengizinkan bayangan di tombol ＋
-- [ ] Tombol cari, notifikasi, pemilih dompet, aksi cepat, grafik (ke Laporan), dan baris transaksi membuka layarnya (layar tujuan belum dibuat)
+- [x] Pemilih dompet membuka lembar Pilih dompet (`src/features/wallets/wallet-sheet.tsx`): dompet yang dipilih saat onboarding dengan saldonya, centang di dompet aktif. Memilih dompet mengganti saldo, grafik, dan transaksi di Beranda dan Transaksi sekaligus. Diuji di browser
+- [ ] Tombol Kelola dompet dan Transfer di lembar Pilih dompet (layar belum dibuat)
+- [ ] Tombol cari, notifikasi, aksi cepat, grafik (ke Laporan), dan baris transaksi membuka layarnya (layar tujuan belum dibuat)
 - [ ] Terhubung database: saldo, grafik, dan transaksi masih DATA CONTOH dari prototipe (`src/features/home/sample-data.ts`); nama panggilan sudah dari isian onboarding
 
 ### 5. Daftar transaksi
-- [x] Rute ada: `src/app/(tabs)/transactions.tsx`
-- [ ] Sesuai wireframe: masih placeholder "Belum dibuat."
-- [ ] Terhubung database
+- [x] Rute ada: `src/app/(tabs)/transactions.tsx`, komponen di `src/features/transactions/`
+- [x] Sesuai wireframe: judul dengan pemilih dompet bergaris, kolom cari dan tombol saringan, kartu ringkasan bulan (navigasi bulan, tombol laporan, Pemasukan dan Pengeluaran dengan bilah, Sisa), petunjuk tahan transaksi, transaksi per hari dengan tanggal, nama hari, total bersih harian, dan kotak berisi baris transaksi. Transfer memakai lingkaran netral. Dicek berdampingan dengan prototipe (terang, gelap, id, en)
+- [x] Pencarian berdasarkan judul atau nama kategori, dengan pesan kalau tidak ada yang cocok (diuji di browser)
+- [x] Pemilih dompet membuka lembar Pilih dompet yang sama dengan Beranda
+- [ ] Belum berfungsi: saringan, pindah bulan, laporan, ketuk baris Pemasukan/Pengeluaran, ketuk dan tahan transaksi (layar tujuannya belum dibuat)
+- [ ] Terhubung database: masih DATA CONTOH dari prototipe (`src/features/transactions/sample-data.ts`), dipakai bersama dengan Beranda
 
 ### 6. Input transaksi
 - [x] Rute ada: `src/components/input-sheet.tsx`, lembar bawah terbuka dari tombol ＋ (bug lembar tidak pernah muncul sudah diperbaiki)

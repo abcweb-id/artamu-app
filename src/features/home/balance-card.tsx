@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 
 import { Icon, type IconName } from '@/components/ui/icon';
+import { WalletChip } from '@/components/ui/wallet-chip';
 import { formatRp } from '@/lib/money';
 import { useAppStore } from '@/stores/app-store';
 import { balanceCard as card } from '@/theme/tokens';
@@ -52,19 +53,12 @@ export function BalanceCard({
         </View>
 
         <View className="flex-row items-center justify-between">
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t('HOME.SWITCH_WALLET', { wallet: walletName })}
+          <WalletChip
+            name={walletName}
+            icon={walletIcon}
+            variant="onCard"
             onPress={onSwitchWallet}
-            className="flex-row items-center gap-1.5 rounded-pill py-1.5 pl-2.5 pr-[9px] active:opacity-80"
-            style={{ backgroundColor: card.inner }}
-          >
-            <Icon name={walletIcon} color={card.text} size={16} />
-            <Text className="text-[13px] font-medium" style={{ color: card.text }}>
-              {walletName}
-            </Text>
-            <Icon name="chevD" color={card.text} size={15} />
-          </Pressable>
+          />
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={t(hide ? 'HOME.SHOW_BALANCE' : 'HOME.HIDE_BALANCE')}

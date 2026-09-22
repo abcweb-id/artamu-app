@@ -154,5 +154,24 @@
     "TITLE": "Data tidak bisa dibuka",
     "BODY": "Terjadi masalah saat membuka catatanmu. Coba lagi; kalau masih gagal, mulai ulang aplikasi.",
     "RETRY": "Coba lagi"
+  },
+  "LIST": {
+    "SEARCH_PLACEHOLDER": "Cari nama atau kategori",
+    "SEARCH_LABEL": "Cari transaksi",
+    "FILTER": "Saringan",
+    "PREV_MONTH": "Bulan sebelumnya",
+    "NEXT_MONTH": "Bulan berikutnya",
+    "OPEN_REPORT": "Buka laporan bulan ini",
+    "REMAINING": "Sisa",
+    "ROW_LABEL": "{{label}} {{amount}}. Lihat transaksinya",
+    "HINT": "Tahan sebuah transaksi untuk menduplikat, memilih beberapa, atau menghapus.",
+    "NO_RESULTS": "Tidak ada transaksi yang cocok dengan “{{query}}”."
+  },
+  "WALLET_PICKER": {
+    "TITLE": "Pilih dompet",
+    "SUBTITLE": "Saldo dan transaksi yang tampil mengikuti dompet ini",
+    "MANAGE": "Kelola dompet",
+    "TRANSFER": "Transfer",
+    "SELECTED": "{{wallet}}, dipilih"
   }
 }

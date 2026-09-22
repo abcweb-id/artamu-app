@@ -7,6 +7,12 @@ import { usePalette } from '@/theme/use-palette';
 
 import { Icon } from './ui/icon';
 
+/**
+ * Jarak bawah untuk isi layar tab yang bisa digulir: tombol tambah naik 22 px di atas bar
+ * ditambah cincin 5 px, lalu ruang lega supaya baris terakhir tidak tertutup.
+ */
+export const TAB_SCROLL_BOTTOM_PADDING = 22 + 5 + 24;
+
 /** Rute tombol tambah di tengah: tidak membuka layar, hanya lembar input. */
 const ADD_ROUTE = 'add';
 
