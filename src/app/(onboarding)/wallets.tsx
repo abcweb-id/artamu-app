@@ -31,7 +31,7 @@ export default function WalletSetup() {
       return;
     }
     setError('');
-    router.push('/buat-pin');
+    router.push('/create-pin');
   };
 
   return (

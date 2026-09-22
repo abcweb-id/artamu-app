@@ -28,7 +28,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database: tidak perlu
 
 ### 2. Pertama kali buka
-- [x] Rute ada: `src/app/(onboarding)/selamat-datang.tsx`
+- [x] Rute ada: `src/app/(onboarding)/welcome.tsx`
 - [x] Sesuai wireframe: simbol dan ARTAMU, judul, tiga poin fitur, tombol "Buat PIN dan mulai", dan "Pulihkan dari cadangan". Dicek berdampingan dengan prototipe di mode terang dan gelap
 - [x] Tombol "Buat PIN dan mulai" ke layar Isi nama panggilan
 - [ ] Tombol "Pulihkan dari cadangan" berfungsi (layar cadangan belum dibuat)
@@ -47,7 +47,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database
 
 ### 5. Daftar transaksi
-- [x] Rute ada: `src/app/(tabs)/transaksi.tsx`
+- [x] Rute ada: `src/app/(tabs)/transactions.tsx`
 - [ ] Sesuai wireframe: masih placeholder "Belum dibuat."
 - [ ] Terhubung database
 
@@ -58,36 +58,36 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database
 
 ### 7. Pengaturan
-- [x] Rute ada: `src/app/(tabs)/pengaturan.tsx`
+- [x] Rute ada: `src/app/(tabs)/settings.tsx`
 - [ ] Sesuai wireframe: masih placeholder "Belum dibuat."
 - [ ] Terhubung database
 
 ### 8. Akun dan profil
-- [x] Rute ada: `src/app/(tabs)/akun.tsx`
+- [x] Rute ada: `src/app/(tabs)/account.tsx`
 - [ ] Sesuai wireframe: masih placeholder "Belum dibuat."
 - [ ] Terhubung database
 
 ## Alur pertama kali buka
 
 ### 9. Isi nama panggilan
-- [x] Rute ada: `src/app/(onboarding)/nama.tsx`
+- [x] Rute ada: `src/app/(onboarding)/nickname.tsx`
 - [x] Sesuai wireframe: tombol kembali, lingkaran ikon, judul, kolom nama (maks 24 huruf), Lanjut buat PIN, Lewati
 - [ ] Terhubung database: nama masih di memori (`src/stores/onboarding-store.ts`), nanti ke tabel settings
 
 ### 10. Dompet dan saldo awal
-- [x] Rute ada: `src/app/(onboarding)/dompet.tsx`
+- [x] Rute ada: `src/app/(onboarding)/wallets.tsx`
 - [x] Sesuai wireframe: Tunai, Bank, E-wallet dengan kotak centang (Tunai dan Bank terpilih dari awal), isian saldo berawalan Rp dan bertitik ribuan, pesan "Pilih minimal satu dompet", Langkah 2 dari 3
 - [ ] Tombol "Tambah dompet lain" berfungsi (formulir dompet belum dibuat)
 - [ ] Terhubung database: pilihan dan saldo masih di memori, nanti jadi baris wallets dan transaksi saldo awal
 
 ### 11. Izin notifikasi
-- [x] Rute ada: `src/app/(onboarding)/izin-notifikasi.tsx`
+- [x] Rute ada: `src/app/(onboarding)/notifications.tsx`
 - [x] Sesuai wireframe: lingkaran lonceng, tiga poin, Izinkan notifikasi, Nanti saja. Keduanya lanjut ke Beranda
 - [ ] Meminta izin sistem sungguhan (expo-notifications belum dipasang)
 - [ ] Terhubung database: tidak perlu
 
 ### 12. Login PIN (dan Buat PIN, Ulangi PIN)
-- [x] Rute ada: Buat PIN dan Ulangi PIN di `src/app/(onboarding)/buat-pin.tsx`, Masukkan PIN di `src/app/(auth)/kunci.tsx`
+- [x] Rute ada: Buat PIN dan Ulangi PIN di `src/app/(onboarding)/create-pin.tsx`, Masukkan PIN di `src/app/(auth)/unlock.tsx`
 - [x] Sesuai wireframe: titik PIN, keypad 72 px, tombol hapus; Masukkan PIN dengan logo, sidik jari, dan Lupa PIN
 - [x] PIN kedua berbeda: "PIN tidak sama. Ulangi dari awal."; PIN salah: "PIN salah. Sisa N percobaan."
 - [x] Aplikasi ke latar belakang lalu dibuka lagi meminta PIN (diuji di browser; tolong cek di HP)
@@ -95,7 +95,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database: PIN masih di memori, nanti hash-nya di expo-secure-store, bukan SQLite
 
 ### 13. PIN terkunci
-- [x] Rute ada: bagian dari `src/app/(auth)/kunci.tsx`
+- [x] Rute ada: bagian dari `src/app/(auth)/unlock.tsx`
 - [x] Sesuai wireframe: lingkaran merah, hitung mundur 0.30 setelah 5 kali salah, keypad pudar dan tidak bisa ditekan
 - [ ] Terhubung database: tidak perlu (waktu kunci nanti di expo-secure-store)
 

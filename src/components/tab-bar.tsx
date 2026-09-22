@@ -8,7 +8,7 @@ import { usePalette } from '@/theme/use-palette';
 import { Icon } from './ui/icon';
 
 /** Rute tombol tambah di tengah: tidak membuka layar, hanya lembar input. */
-const ADD_ROUTE = 'tambah';
+const ADD_ROUTE = 'add';
 
 /**
  * Bottom bar sesuai prototipe: tab aktif hijau dengan garis pendek di tepi atas,

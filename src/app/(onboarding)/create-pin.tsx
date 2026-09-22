@@ -23,7 +23,7 @@ export default function CreatePin() {
       setError('');
     } else if (entered === first) {
       setPin(entered);
-      router.push('/izin-notifikasi');
+      router.push('/notifications');
     } else {
       setFirst(null);
       setError(t('PIN.MISMATCH'));

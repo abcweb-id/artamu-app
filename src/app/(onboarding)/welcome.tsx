@@ -48,7 +48,7 @@ export default function Welcome() {
       ))}
 
       <View className="mt-auto">
-        <Button label={t('WELCOME.START')} onPress={() => router.push('/nama')} />
+        <Button label={t('WELCOME.START')} onPress={() => router.push('/nickname')} />
         {/* Cadangan dan pemulihan belum dibuat. */}
         <Button variant="link" label={t('WELCOME.RESTORE')} className="mt-2.5" />
       </View>

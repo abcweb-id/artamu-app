@@ -12,7 +12,7 @@ npm run lint
 Struktur:
 
 ```
-src/app/            rute Expo Router: (onboarding), (auth) kunci PIN, (tabs) lima menu bawah
+src/app/            rute Expo Router (nama rute bahasa Inggris): (onboarding), (auth) unlock PIN, (tabs) lima menu bawah
 src/components/     komponen bersama
 src/features/       fitur: transaksi, dompet, kategori, anggaran, dan lainnya
 src/db/             klien SQLite dan migrasi

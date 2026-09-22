@@ -16,7 +16,7 @@ export default function Nickname() {
 
   const next = (value: string) => {
     setNickname(value.trim());
-    router.push('/dompet');
+    router.push('/wallets');
   };
 
   return (

@@ -30,17 +30,17 @@ export default function TabLayout() {
           options={{ title: t('TABS.HOME'), tabBarIcon: tabIcon('home') }}
         />
         <Tabs.Screen
-          name="transaksi"
+          name="transactions"
           options={{ title: t('TABS.TRANSACTIONS'), tabBarIcon: tabIcon('list') }}
         />
         {/* Tekan dicegat TabBar untuk membuka lembar input; layarnya tidak pernah tampil. */}
-        <Tabs.Screen name="tambah" options={{ tabBarAccessibilityLabel: t('TABS.ADD') }} />
+        <Tabs.Screen name="add" options={{ tabBarAccessibilityLabel: t('TABS.ADD') }} />
         <Tabs.Screen
-          name="pengaturan"
+          name="settings"
           options={{ title: t('TABS.SETTINGS'), tabBarIcon: tabIcon('settings') }}
         />
         <Tabs.Screen
-          name="akun"
+          name="account"
           options={{ title: t('TABS.ACCOUNT'), tabBarIcon: tabIcon('user') }}
         />
       </Tabs>
