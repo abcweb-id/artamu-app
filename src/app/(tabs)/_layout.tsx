@@ -6,10 +6,15 @@ import { InputSheet } from '@/components/input-sheet';
 import { TabBar } from '@/components/tab-bar';
 import { Icon, type IconName } from '@/components/ui/icon';
 
+/** Tab aktif memakai bobot ini, tab lain tetap regular (garis). */
+const ACTIVE_WEIGHT = 'bold';
+
 function tabIcon(name: IconName) {
   // TabBar selalu mengirim warna palette berupa string.
-  function TabIcon({ color }: { color: ColorValue }) {
-    return <Icon name={name} color={color as string} />;
+  function TabIcon({ color, focused }: { color: ColorValue; focused: boolean }) {
+    return (
+      <Icon name={name} color={color as string} weight={focused ? ACTIVE_WEIGHT : 'regular'} />
+    );
   }
   return TabIcon;
 }

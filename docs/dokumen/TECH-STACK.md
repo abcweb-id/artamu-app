@@ -91,7 +91,7 @@ Mode gelap memakai pasangan token yang sama dengan nilai berbeda. Jangan menulis
 
 Ikon kategori disimpan di database sebagai nama ikon, bukan gambar. Nama itu jangan diubah setelah ada pengguna, karena tersimpan di kolom `icon` pada tabel `categories`.
 
-**Bobot ikon.** Ikon antarmuka, termasuk bottom bar dan tab aktif, memakai `regular` (garis). Tab aktif dibedakan lewat warna, bukan isian. Ikon kategori memakai `fill` agar tegas dari jauh; warnanya tetap mengikuti token, jadi mode gelap dan kategori buatan pengguna tetap jalan.
+**Bobot ikon.** Ikon antarmuka memakai `regular` (garis). Tab aktif di bottom bar memakai `bold` dan warna utama; tab lain tetap `regular`. Ikon kategori memakai `fill` agar tegas dari jauh; warnanya tetap mengikuti token, jadi mode gelap dan kategori buatan pengguna tetap jalan.
 
 **Ikon berupa PNG berwarna ditolak.** Tidak bisa mengikuti mode gelap, butuh tiga ukuran berkas per ikon, dan warna kategori buatan pengguna tidak bisa diterapkan karena sudah terkunci di gambar. Untuk daftar transaksi yang panjang, ikon penuh warna juga bersaing dengan nominal, padahal itu yang perlu dibaca lebih dulu.
 
@@ -191,7 +191,7 @@ Setiap keputusan yang sulit dibalik dicatat di `docs/keputusan/` sebagai berkas 
 9. Tanpa bayangan, ornamen maksimal dua bentuk per kartu.
 10. Ikon memakai library pihak ketiga berformat SVG, bukan PNG berwarna dan bukan gambar buatan sendiri. Yang digambar sendiri hanya ilustrasi layar kosong dan onboarding, karena di situlah karakter merek terbentuk.
 11. Gratis penuh tanpa iklan sampai jumlah pengguna stabil. Paywall tidak dirancang sekarang karena paywall tanpa pengguna hampir selalu meleset. Lihat bagian Monetisasi di bawah.
-12. Garis ikon 1,5 mengikuti Phosphor `regular`. Ikon antarmuka dan tab aktif bergaris; hanya ikon kategori yang memakai `fill`.
+12. Garis ikon 1,5 mengikuti Phosphor `regular`. Tab aktif memakai `bold`, ikon kategori memakai `fill`, ikon lain `regular`.
 
 ## Monetisasi
 

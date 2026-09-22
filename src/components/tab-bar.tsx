@@ -12,7 +12,7 @@ const ADD_ROUTE = 'tambah';
 
 /**
  * Bottom bar sesuai prototipe: tab aktif hijau dengan garis pendek di tepi atas,
- * tombol tambah kotak membulat yang naik di atas bar. Ikon tetap bergaris (regular).
+ * tombol tambah kotak membulat yang naik di atas bar. Ikon aktif bold, lainnya regular.
  */
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const c = usePalette();

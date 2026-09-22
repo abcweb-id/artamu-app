@@ -37,7 +37,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 
 ### 3. Bottom bar
 - [x] Rute ada: `src/app/(tabs)/_layout.tsx` dengan tab bar sendiri di `src/components/tab-bar.tsx`
-- [x] Sesuai wireframe: tab aktif hijau dengan garis 28×3 di tepi atas, label 11 px, tombol ＋ 60×60 sudut 18 yang naik di atas bar dengan cincin dan bayangan. Dicek berdampingan dengan prototipe di mode terang dan gelap. Beda yang disengaja: ikon tab aktif tetap `regular`, tidak ditebalkan seperti di prototipe
+- [x] Sesuai wireframe: tab aktif hijau dengan garis 28×3 di tepi atas, label 11 px, tombol ＋ 60×60 sudut 18 yang naik di atas bar dengan cincin dan bayangan. Dicek berdampingan dengan prototipe di mode terang dan gelap. Ikon tab aktif `bold` (prototipe memakai garis 2,2), tab lain `regular`
 - [x] Perpindahan tab dan tombol ＋ membuka lembar input (diuji dengan klik di browser)
 - [ ] Terhubung database: tidak perlu
 
