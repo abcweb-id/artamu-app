@@ -1,10 +1,10 @@
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 
 import { Screen } from '@/components/screen';
-import { IconMark } from '@/components/ui/icon-mark';
 import { PinDots } from '@/features/pin/pin-dots';
 import { PinPad } from '@/features/pin/pin-pad';
 import { usePinEntry } from '@/features/pin/use-pin-entry';
@@ -38,9 +38,12 @@ export default function CreatePin() {
       bottomInset
       className="items-center pb-[30px]"
     >
-      <View className="mt-4">
-        <IconMark name="lock" />
-      </View>
+      <Image
+        source={require('@/assets/brand/logo-mark.png')}
+        style={{ width: 64, height: 64, marginTop: 12 }}
+        contentFit="contain"
+        accessibilityLabel="Logo Artamu"
+      />
       <Text className="mb-1 mt-[22px] font-display text-[21px] leading-[26px] text-text">
         {t(confirming ? 'PIN.CONFIRM_TITLE' : 'PIN.CREATE_TITLE')}
       </Text>

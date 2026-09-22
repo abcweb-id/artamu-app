@@ -34,11 +34,11 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/brand/logo-vertical.png",
-          "imageWidth": 180,
+          "image": "./assets/brand/logo-mark.png",
+          "imageWidth": 110,
           "backgroundColor": "#F8FAF9",
           "dark": {
-            "image": "./assets/brand/logo-vertical-on-dark.png",
+            "image": "./assets/brand/logo-mark.png",
             "backgroundColor": "#111216"
           }
         }

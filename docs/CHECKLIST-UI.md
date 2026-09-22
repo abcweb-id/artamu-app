@@ -23,8 +23,8 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 ## Kerangka utama (dikerjakan duluan)
 
 ### 1. Layar pembuka
-- [x] Rute ada: splash native di `app.json`, memakai `assets/brand/logo-vertical.png` (terang) dan `logo-vertical-on-dark.png` (gelap)
-- [x] Sesuai wireframe: simbol, nama "ARTAMU", dan tagline di tengah latar `#F8FAF9`, lebar 180. Hanya terlihat di development build, tidak di Expo Go
+- [x] Rute ada: dua lapis. Splash native di `app.json` hanya simbol (`logo-mark.png`), karena Android 12+ memotong gambar menjadi ikon bulat kecil. Setelah itu `src/components/splash-overlay.tsx` menampilkan logo vertikal lengkap, lalu memudar
+- [x] Sesuai wireframe: logo vertikal 186 px (simbol, ARTAMU, tagline) di tengah latar `#F8FAF9`, versi tulisan terang di mode gelap, tampil 1,2 detik lalu memudar. Dicek di browser; splash native hanya terlihat di development build, tidak di Expo Go
 - [ ] Terhubung database: tidak perlu
 
 ### 2. Pertama kali buka
@@ -88,7 +88,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 
 ### 12. Login PIN (dan Buat PIN, Ulangi PIN)
 - [x] Rute ada: Buat PIN dan Ulangi PIN di `src/app/(onboarding)/create-pin.tsx`, Masukkan PIN di `src/app/(auth)/unlock.tsx`
-- [x] Sesuai wireframe: titik PIN, keypad 72 px, tombol hapus; Masukkan PIN dengan logo, sidik jari, dan Lupa PIN
+- [x] Sesuai wireframe: titik PIN, keypad 72 px, tombol hapus; Masukkan PIN dengan logo, sidik jari, dan Lupa PIN. Beda yang disengaja: Buat PIN dan Ulangi PIN juga memakai logo (wireframe memakai ikon gembok)
 - [x] PIN kedua berbeda: "PIN tidak sama. Ulangi dari awal."; PIN salah: "PIN salah. Sisa N percobaan."
 - [x] Aplikasi ke latar belakang lalu dibuka lagi meminta PIN (diuji di browser; tolong cek di HP)
 - [ ] Tombol sidik jari dan Lupa PIN berfungsi (belum dibuat)

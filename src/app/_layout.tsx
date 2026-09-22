@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { AppState, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { SplashOverlay } from '@/components/splash-overlay';
 import { DATABASE_NAME, migrateDbIfNeeded } from '@/db/client';
 import { useAppStore } from '@/stores/app-store';
 import { palette, themeVars } from '@/theme/tokens';
@@ -62,6 +63,7 @@ export default function RootLayout() {
             <BottomSheetModalProvider>
               <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
               <RootStack />
+              <SplashOverlay />
             </BottomSheetModalProvider>
           </ThemeProvider>
         </SQLiteProvider>
