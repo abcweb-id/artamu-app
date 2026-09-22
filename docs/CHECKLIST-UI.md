@@ -15,7 +15,7 @@ Tiga kotak per layar:
 |---|---|
 | Item di checklist | 36 (35 layar prototipe ditambah bottom bar) |
 | Rute ada | 9 |
-| Sesuai wireframe | 2 |
+| Sesuai wireframe | 3 |
 | Terhubung database | 0 |
 
 Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql` dan belum dipasang sebagai migrasi.
@@ -36,8 +36,9 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Tombol berpindah ke Beranda (diuji dengan klik di browser)
 
 ### 3. Bottom bar
-- [x] Rute ada: `src/app/(tabs)/_layout.tsx`, lima menu dan tombol ＋ berfungsi
-- [ ] Sesuai wireframe: belum ada penanda menu aktif dan tombol ＋ yang menonjol
+- [x] Rute ada: `src/app/(tabs)/_layout.tsx` dengan tab bar sendiri di `src/components/tab-bar.tsx`
+- [x] Sesuai wireframe: tab aktif hijau dengan garis 28×3 di tepi atas, label 11 px, tombol ＋ 60×60 sudut 18 yang naik di atas bar dengan cincin dan bayangan. Dicek berdampingan dengan prototipe di mode terang dan gelap. Beda yang disengaja: ikon tab aktif tetap `regular`, tidak ditebalkan seperti di prototipe
+- [x] Perpindahan tab dan tombol ＋ membuka lembar input (diuji dengan klik di browser)
 - [ ] Terhubung database: tidak perlu
 
 ### 4. Dashboard
@@ -51,7 +52,8 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database
 
 ### 6. Input transaksi
-- [x] Rute ada: `src/components/input-sheet.tsx`, lembar bawah terbuka dari tombol ＋
+- [x] Rute ada: `src/components/input-sheet.tsx`, lembar bawah terbuka dari tombol ＋ (bug lembar tidak pernah muncul sudah diperbaiki)
+- [ ] Menutup dengan geser ke bawah lalu membuka lagi (belum bisa diuji di browser)
 - [ ] Sesuai wireframe: baru judul "Transaksi baru", belum ada keypad, kategori, dan tombol simpan
 - [ ] Terhubung database
 
@@ -225,6 +227,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Font Plus Jakarta Sans
 - [x] Komponen dasar di `src/components/ui/`: `Icon` (57 ikon, gambar dari Phosphor), `Button` (utama dan tautan), `IconBadge`, `ListRow`, `Card`, `ScreenTitle`, `SectionLabel`
 - [x] `CategoryIcon`: lingkaran 40/48 px, ikon `fill` 55 persen, delapan pasangan warna kategori (`categoryColors` di `src/theme/tokens.ts`). Belum dipakai di layar mana pun
+- [x] Judul tab browser di web: "{nama halaman} - ARTAMU" lewat prop `pageTitle` di `Screen` (`src/components/page-title.tsx`)
 - [x] Token `on-primary` untuk teks di atas warna utama (putih di mode terang, gelap di mode gelap)
 - [x] Ikon Phosphor (`phosphor-react-native`): 57 ikon prototipe dipetakan ke Phosphor di `src/components/ui/icon.tsx`, diimpor per ikon. Mendukung bobot thin, light, regular, bold, fill, dan duotone
 - [ ] Skema database versi 1 dipasang sebagai migrasi

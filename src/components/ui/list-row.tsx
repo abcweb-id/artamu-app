@@ -24,7 +24,9 @@ export function ListRow({ icon, title, subtitle, value, right, onPress }: ListRo
       <Icon name={icon} color={c.muted} size={20} />
       <View className="min-w-0 flex-1">
         <Text className="text-[15px] leading-[22px] text-text">{title}</Text>
-        {subtitle ? <Text className="text-[12.5px] leading-[19px] text-muted">{subtitle}</Text> : null}
+        {subtitle ? (
+          <Text className="text-[12.5px] leading-[19px] text-muted">{subtitle}</Text>
+        ) : null}
       </View>
       {right ?? (
         <View className="flex-row items-center gap-0.5">

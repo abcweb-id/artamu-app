@@ -19,7 +19,7 @@ export default function Welcome() {
   const setOnboarded = useAppStore((s) => s.setOnboarded);
 
   return (
-    <Screen bottomInset className="pb-[30px]">
+    <Screen pageTitle={t('onboarding.pageTitle')} bottomInset className="pb-[30px]">
       <View className="mt-9 flex-row items-center gap-2.5">
         <Image
           source={require('@/assets/brand/logo-mark.png')}
