@@ -4,7 +4,7 @@ import { Pressable, Text, View } from 'react-native';
 
 import { Icon, type IconName } from '@/components/ui/icon';
 import { WalletChip } from '@/components/ui/wallet-chip';
-import { formatRp } from '@/lib/money';
+import { useMoneyFormat } from '@/lib/money';
 import { useAppStore } from '@/stores/app-store';
 import { balanceCard as card } from '@/theme/tokens';
 import { usePalette } from '@/theme/use-palette';
@@ -29,6 +29,7 @@ export function BalanceCard({
   expense,
   onSwitchWallet,
 }: BalanceCardProps) {
+  const money = useMoneyFormat();
   const { t } = useTranslation();
   const hide = useAppStore((s) => s.hideBalance);
   const toggleHide = useAppStore((s) => s.toggleHideBalance);
@@ -76,7 +77,7 @@ export function BalanceCard({
           className="mt-0.5 px-1 font-display text-[31px] leading-[38px]"
           style={{ color: card.text, fontVariant: ['tabular-nums'] }}
         >
-          {hide ? `Rp ${MASK}` : formatRp(balance)}
+          {hide ? `Rp ${MASK}` : money.rp(balance)}
         </Text>
       </View>
 
@@ -84,12 +85,12 @@ export function BalanceCard({
         <FlowTile
           kind="income"
           label={t('HOME.INCOME')}
-          value={hide ? `Rp ${MASK.slice(2)}` : formatRp(income)}
+          value={hide ? `Rp ${MASK.slice(2)}` : money.rp(income)}
         />
         <FlowTile
           kind="expense"
           label={t('HOME.EXPENSE')}
-          value={hide ? `Rp ${MASK.slice(2)}` : formatRp(expense)}
+          value={hide ? `Rp ${MASK.slice(2)}` : money.rp(expense)}
         />
       </View>
     </View>

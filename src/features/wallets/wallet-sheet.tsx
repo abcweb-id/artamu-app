@@ -6,7 +6,7 @@ import { Icon } from '@/components/ui/icon';
 import { IconBadge } from '@/components/ui/icon-badge';
 import { Sheet } from '@/components/ui/sheet';
 import { sampleWallets } from '@/features/transactions/sample-data';
-import { formatRp } from '@/lib/money';
+import { useMoneyFormat } from '@/lib/money';
 import { useAppStore } from '@/stores/app-store';
 import { usePalette } from '@/theme/use-palette';
 
@@ -14,6 +14,7 @@ import { useActiveWallet, useWalletBalances } from './use-active-wallet';
 
 /** Lembar Pilih dompet dari pemilih dompet di Beranda dan Transaksi. */
 export function WalletSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const money = useMoneyFormat();
   const { t } = useTranslation();
   const c = usePalette();
   const { key: active, wallets } = useActiveWallet();
@@ -42,7 +43,7 @@ export function WalletSheet({ open, onClose }: { open: boolean; onClose: () => v
             <View className="flex-1">
               <Text className="text-[15px] font-medium leading-[22px] text-text">{name}</Text>
               <Text className="text-[12.5px] text-muted" style={{ fontVariant: ['tabular-nums'] }}>
-                {formatRp(balances[w])}
+                {money.rp(balances[w])}
               </Text>
             </View>
             {selected ? <Icon name="check" color={c.primary} size={22} /> : null}

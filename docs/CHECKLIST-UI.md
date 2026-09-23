@@ -1,7 +1,7 @@
 # Artamu, checklist UI
 
 Status setiap layar dibandingkan dengan prototipe (`docs/situs-internal/index.html`).
-Diperbarui 22 September 2026.
+Diperbarui 23 September 2026.
 
 Tiga kotak per layar:
 
@@ -15,7 +15,7 @@ Tiga kotak per layar:
 |---|---|
 | Item di checklist | 36 (35 layar prototipe ditambah bottom bar) |
 | Rute ada | 13 |
-| Sesuai wireframe | 11 |
+| Sesuai wireframe | 13 |
 | Terhubung database | 0 |
 
 Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql` dan belum dipasang sebagai migrasi.
@@ -66,14 +66,20 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Terhubung database: transaksi baru hanya di memori (`src/stores/transactions-store.ts`), hilang saat aplikasi ditutup
 
 ### 7. Pengaturan
-- [x] Rute ada: `src/app/(tabs)/settings.tsx`
-- [ ] Sesuai wireframe: masih placeholder "Belum dibuat."
-- [ ] Terhubung database
+- [x] Rute ada: `src/app/(tabs)/settings.tsx`, Ganti PIN di `src/app/change-pin.tsx`, pengaturan di `src/stores/settings-store.ts`
+- [x] Sesuai wireframe: bagian Tampilan, Keamanan, Catatan, Data, Lainnya dengan sakelar dan nilai di kanan, tombol Kunci aplikasi. Dicek berdampingan dengan prototipe
+- [x] Berfungsi (diuji di browser): Mode gelap, Bahasa (Ikuti sistem, Bahasa Indonesia, English, termasuk format angka "Rp 1,850,000" di en), Kunci dengan PIN, Kunci otomatis (Langsung, 1, 5, 15 menit, dihitung dari waktu aplikasi ditinggalkan), Ganti PIN (PIN lama diperiksa, beda dari prototipe), Kunci aplikasi, versi dari app.json
+- [x] Buka dengan sidik jari: menyalakan meminta verifikasi dulu; tidak aktif kalau ponsel tidak punya sidik jari. Belum diuji di HP
+- [ ] Tampilan saja (layar belum dibuat): Warna tema, Kategori, Dompet, jam pengingat, Ekspor ke CSV, Cadangan dan pemulihan, Bantuan, Tentang
+- [ ] Pengingat harian dan notifikasi tagihan rutin hanya menyimpan pilihan; notifikasi belum dikirim (expo-notifications belum dipasang)
+- [ ] Terhubung database: semua pengaturan masih di memori, nanti di tabel settings
 
 ### 8. Akun dan profil
 - [x] Rute ada: `src/app/(tabs)/account.tsx`
-- [ ] Sesuai wireframe: masih placeholder "Belum dibuat."
-- [ ] Terhubung database
+- [x] Sesuai wireframe: lingkaran inisial dan nama (atau ikon dan "Tanpa nama"), Mencatat sejak, tiga kotak statistik, Akun cloud, Catatan lain, Dompet dengan saldo dan dompet aktif, Kelola dompet, Profil, Zona bahaya. Dicek berdampingan dengan prototipe
+- [x] Berfungsi (diuji di browser): nama dari onboarding, jumlah transaksi bertambah saat mencatat, ketuk dompet menjadikannya dompet aktif, Ganti PIN, Hapus semua data (lembar konfirmasi bersama di `src/features/data/wipe-sheet.tsx`)
+- [ ] Tampilan saja (layar belum dibuat): Masuk atau daftar (rilis 2.0), Transaksi rutin, Hutang piutang, Laporan, Kelola dompet, Ubah nama dan foto, Cadangan
+- [ ] Terhubung database: statistik, Mencatat sejak, dan jumlah rutin/hutang masih DATA CONTOH (`src/features/home/sample-data.ts`)
 
 ## Alur pertama kali buka
 

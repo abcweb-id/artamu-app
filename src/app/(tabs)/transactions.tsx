@@ -14,7 +14,7 @@ import { TransactionRow } from '@/features/transactions/transaction-row';
 import { useActiveWallet } from '@/features/wallets/use-active-wallet';
 import { WalletSheet } from '@/features/wallets/wallet-sheet';
 import { relativeDayLabel } from '@/lib/date';
-import { formatAmount } from '@/lib/money';
+import { useMoneyFormat } from '@/lib/money';
 import { usePalette } from '@/theme/use-palette';
 
 type DaySection = { date: string; net: number; data: SampleTransaction[] };
@@ -35,6 +35,7 @@ function groupByDay(rows: SampleTransaction[]): DaySection[] {
 }
 
 export default function Transactions() {
+  const money = useMoneyFormat();
   const { t, i18n } = useTranslation();
   const c = usePalette();
   const locale = i18n.language === 'id' ? 'id-ID' : 'en-US';
@@ -141,7 +142,7 @@ export default function Transactions() {
                 className={`font-display text-[12.5px] ${income ? 'text-income' : 'text-expense'}`}
                 style={{ fontVariant: ['tabular-nums'] }}
               >
-                {`${income ? '+' : '−'} ${formatAmount(Math.abs(section.net))}`}
+                {`${income ? '+' : '−'} ${money.amount(Math.abs(section.net))}`}
               </Text>
             </View>
           );

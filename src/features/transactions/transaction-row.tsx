@@ -2,7 +2,7 @@ import { Pressable, Text, View } from 'react-native';
 
 import { CategoryIcon } from '@/components/ui/category-icon';
 import type { IconName } from '@/components/ui/icon';
-import { formatAmount } from '@/lib/money';
+import { useMoneyFormat } from '@/lib/money';
 import type { CategoryColor } from '@/theme/tokens';
 
 type TransactionRowProps = {
@@ -35,6 +35,7 @@ export function TransactionRow({
   first,
   onPress,
 }: TransactionRowProps) {
+  const money = useMoneyFormat();
   const income = kind === 'income';
   const boxed = variant === 'boxed';
   return (
@@ -63,7 +64,7 @@ export function TransactionRow({
         className={`font-display-sb ${boxed ? 'text-sm' : 'text-[14.5px]'} ${income ? 'text-income' : 'text-expense'}`}
         style={{ fontVariant: ['tabular-nums'] }}
       >
-        {`${income ? '+' : '−'} ${formatAmount(amount)}`}
+        {`${income ? '+' : '−'} ${money.amount(amount)}`}
       </Text>
     </Pressable>
   );

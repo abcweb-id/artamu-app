@@ -16,6 +16,8 @@ type ListRowProps = {
   onPress?: () => void;
   /** danger: ikon dan judul merah, untuk tindakan yang menghapus. */
   tone?: 'default' | 'danger';
+  /** Panah kanan. Bawaan: tampil kalau baris bisa diketuk. */
+  chevron?: boolean;
 };
 
 /** Baris daftar di Pengaturan dan Akun: ikon garis, judul, keterangan, nilai, panah. */
@@ -27,6 +29,7 @@ export function ListRow({
   right,
   onPress,
   tone = 'default',
+  chevron = !!onPress,
 }: ListRowProps) {
   const c = usePalette();
   const content = (
@@ -45,7 +48,7 @@ export function ListRow({
       {right ?? (
         <View className="flex-row items-center gap-0.5">
           {value ? <Text className="text-[13px] text-muted">{value}</Text> : null}
-          {onPress ? <Icon name="chevR" color={c.muted} size={17} /> : null}
+          {chevron ? <Icon name="chevR" color={c.muted} size={17} /> : null}
         </View>
       )}
     </>

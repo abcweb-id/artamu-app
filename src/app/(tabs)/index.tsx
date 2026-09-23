@@ -17,7 +17,7 @@ import { TransactionRow } from '@/features/transactions/transaction-row';
 import { useActiveWallet } from '@/features/wallets/use-active-wallet';
 import { WalletSheet } from '@/features/wallets/wallet-sheet';
 import { monthName, relativeDayLabel } from '@/lib/date';
-import { formatRp } from '@/lib/money';
+import { useMoneyFormat } from '@/lib/money';
 import { useOnboardingStore } from '@/stores/onboarding-store';
 
 /** Judul bagian dengan isi kanan (legenda atau tautan). */
@@ -31,6 +31,7 @@ function Section({ title, right }: { title: string; right?: React.ReactNode }) {
 }
 
 export default function Home() {
+  const money = useMoneyFormat();
   const { t, i18n } = useTranslation();
   const nickname = useOnboardingStore((s) => s.nickname)
     .trim()
@@ -99,8 +100,8 @@ export default function Home() {
             i18nKey={diff >= 0 ? 'HOME.SPENDING_LESS' : 'HOME.SPENDING_MORE'}
             values={{
               day,
-              amount: formatRp(spent),
-              diff: formatRp(Math.abs(diff)),
+              amount: money.rp(spent),
+              diff: money.rp(Math.abs(diff)),
               month: lastMonth,
             }}
             components={{ b: <Text className="font-medium text-text" /> }}

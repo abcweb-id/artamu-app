@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 
 import { Icon, type IconName } from '@/components/ui/icon';
-import { formatRp } from '@/lib/money';
+import { useMoneyFormat } from '@/lib/money';
 import { usePalette } from '@/theme/use-palette';
 
 type MonthSummaryCardProps = {
@@ -32,6 +32,7 @@ export function MonthSummaryCard({
   onNext,
   onOpenReport,
 }: MonthSummaryCardProps) {
+  const money = useMoneyFormat();
   const { t } = useTranslation();
   const c = usePalette();
   const ink = c['primary-ink'];
@@ -114,7 +115,7 @@ export function MonthSummaryCard({
           className="mr-[18px] font-display text-[15px]"
           style={{ color: ink, fontVariant: ['tabular-nums'] }}
         >
-          {`${remaining < 0 ? '−' : ''}${formatRp(Math.abs(remaining))}`}
+          {`${remaining < 0 ? '−' : ''}${money.rp(Math.abs(remaining))}`}
         </Text>
       </View>
     </View>
@@ -133,6 +134,7 @@ function SummaryRow({
   /** 0 sampai 1. */
   part: number;
 }) {
+  const money = useMoneyFormat();
   const { t } = useTranslation();
   const c = usePalette();
   const income = kind === 'income';
@@ -142,7 +144,7 @@ function SummaryRow({
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={t('LIST.ROW_LABEL', { label, amount: formatRp(amount) })}
+      accessibilityLabel={t('LIST.ROW_LABEL', { label, amount: money.rp(amount) })}
       className="flex-row items-center gap-2.5 rounded-xl py-[5px] active:opacity-70"
     >
       {/* Filter per jenis belum dibuat. */}
@@ -158,7 +160,7 @@ function SummaryRow({
             {label}
           </Text>
           <Text className="font-display text-sm" style={{ color, fontVariant: ['tabular-nums'] }}>
-            {formatRp(amount)}
+            {money.rp(amount)}
           </Text>
         </View>
         <View

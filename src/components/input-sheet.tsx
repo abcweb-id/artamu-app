@@ -14,7 +14,7 @@ import {
 } from '@/features/categories/default-categories';
 import { SAMPLE_TODAY } from '@/features/transactions/sample-data';
 import { useActiveWallet } from '@/features/wallets/use-active-wallet';
-import { formatAmount } from '@/lib/money';
+import { useMoneyFormat } from '@/lib/money';
 import { useInputSheet } from '@/stores/input-sheet-store';
 import { useTransactionsStore } from '@/stores/transactions-store';
 import { usePalette } from '@/theme/use-palette';
@@ -39,6 +39,7 @@ export function InputSheet() {
 }
 
 function InputForm({ onDone }: { onDone: () => void }) {
+  const money = useMoneyFormat();
   const { t } = useTranslation();
   const c = usePalette();
   const { key: wallet } = useActiveWallet();
@@ -133,7 +134,7 @@ function InputForm({ onDone }: { onDone: () => void }) {
           className="font-display text-4xl leading-[50px] text-text"
           style={{ fontVariant: ['tabular-nums'] }}
         >
-          {amount ? formatAmount(Number(amount)) : '0'}
+          {amount ? money.amount(Number(amount)) : '0'}
         </Text>
       </View>
       <Text

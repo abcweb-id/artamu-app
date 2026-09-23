@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import type { StarterWallet } from './onboarding-store';
+import { useSettingsStore } from './settings-store';
 
 /** Salah PIN sebanyak ini mengunci layar PIN sementara. */
 export const MAX_PIN_ATTEMPTS = 5;
@@ -66,7 +67,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   dismissHint: (key) => set((s) => ({ dismissedHints: [...s.dismissedHints, key] })),
   lock: () => {
     const { onboarded, pin } = get();
-    if (onboarded && pin) set({ locked: true });
+    // Kunci dengan PIN dimatikan di Pengaturan: jangan pernah meminta PIN.
+    if (onboarded && pin && useSettingsStore.getState().pinEnabled) set({ locked: true });
   },
   unlock: () => set({ locked: false, failedAttempts: 0, lockedUntil: null }),
   verifyPin: (input) => {

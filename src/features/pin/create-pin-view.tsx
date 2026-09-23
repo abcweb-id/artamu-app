@@ -1,9 +1,10 @@
 import { Image } from 'expo-image';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { Screen } from '@/components/screen';
+import { BackButton } from '@/components/ui/back-button';
 
 import { PinDots } from './pin-dots';
 import { PinPad } from './pin-pad';
@@ -14,10 +15,12 @@ type CreatePinViewProps = {
   variant: 'first' | 'reset';
   /** Dipanggil setelah PIN kedua sama dengan yang pertama. */
   onCreated: (pin: string) => void;
+  /** Tampilkan tombol kembali di kiri atas (Ganti PIN dari Pengaturan). */
+  onBack?: () => void;
 };
 
 /** Buat PIN lalu Ulangi PIN di satu layar. Kalau tidak sama, kembali ke awal. */
-export function CreatePinView({ variant, onCreated }: CreatePinViewProps) {
+export function CreatePinView({ variant, onCreated, onBack }: CreatePinViewProps) {
   const { t } = useTranslation();
   const [first, setFirst] = useState<string | null>(null);
   const [error, setError] = useState('');
@@ -45,6 +48,11 @@ export function CreatePinView({ variant, onCreated }: CreatePinViewProps) {
 
   return (
     <Screen pageTitle={title} bottomInset className="items-center pb-[30px]">
+      {onBack ? (
+        <View className="absolute left-5 top-1.5">
+          <BackButton onPress={onBack} />
+        </View>
+      ) : null}
       <Image
         source={require('@/assets/brand/logo-mark.png')}
         style={{ width: 64, height: 64, marginTop: 12 }}
