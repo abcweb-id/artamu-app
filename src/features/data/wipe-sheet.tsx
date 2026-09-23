@@ -1,28 +1,33 @@
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { useSQLiteContext, type SQLiteDatabase } from 'expo-sqlite';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform, Text, TextInput, View } from 'react-native';
 
 import { Button } from '@/components/ui/button';
 import { Sheet } from '@/components/ui/sheet';
+import { wipeDatabase } from '@/db/repo/wipe';
+import { notifyDbChanged } from '@/db/use-db-query';
+import { clearPin } from '@/lib/pin';
 import { useAppStore } from '@/stores/app-store';
 import { useOnboardingStore } from '@/stores/onboarding-store';
 import { useSettingsStore } from '@/stores/settings-store';
-import { useTransactionsStore } from '@/stores/transactions-store';
 import { usePalette } from '@/theme/use-palette';
 
 // BottomSheetTextInput memakai API TextInput yang tidak ada di react-native-web.
 const SheetInput = Platform.OS === 'web' ? TextInput : BottomSheetTextInput;
 
 /**
- * Hapus semua data dan kembali ke layar sambutan. Sementara hanya data di memori;
- * nanti juga menghapus database, berkas foto struk, dan isi expo-secure-store.
+ * Hapus semua data dan kembali ke layar sambutan: isi database, hash PIN, lalu store.
+ * Kategori dan pengaturan bawaan dikembalikan seperti setelah migrasi.
  */
-export function wipeAllData() {
+export async function wipeAllData(db: SQLiteDatabase) {
+  await wipeDatabase(db);
+  await clearPin();
   useOnboardingStore.getState().reset();
-  useTransactionsStore.getState().reset();
   useSettingsStore.getState().reset();
   useAppStore.getState().reset();
+  notifyDbChanged();
 }
 
 /** Lembar konfirmasi Hapus semua data: ketik HAPUS (en: DELETE) untuk melanjutkan. */
@@ -41,6 +46,7 @@ function WipeForm({ onCancel }: { onCancel: () => void }) {
   const c = usePalette();
   const [confirmText, setConfirmText] = useState('');
   const [error, setError] = useState('');
+  const db = useSQLiteContext();
   const word = t('WIPE.WORD');
 
   const wipe = () => {
@@ -49,7 +55,7 @@ function WipeForm({ onCancel }: { onCancel: () => void }) {
       return;
     }
     onCancel();
-    wipeAllData();
+    wipeAllData(db);
   };
 
   return (

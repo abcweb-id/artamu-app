@@ -7,16 +7,23 @@ import { Screen } from '@/components/screen';
 import { TAB_SCROLL_BOTTOM_PADDING } from '@/components/tab-bar';
 import { Button } from '@/components/ui/button';
 import { HintBanner } from '@/components/ui/hint-banner';
+import type { IconName } from '@/components/ui/icon';
 import { IconButton } from '@/components/ui/icon-button';
+import {
+  dailySpending,
+  periodTotals,
+  recentTransactions,
+  unreadNotificationCount,
+} from '@/db/repo/transactions';
+import { useDbQuery } from '@/db/use-db-query';
 import { BalanceCard } from '@/features/home/balance-card';
 import { QuickActions } from '@/features/home/quick-actions';
-import { sampleHome } from '@/features/home/sample-data';
 import { SpendingChart } from '@/features/home/spending-chart';
-import { SAMPLE_TODAY } from '@/features/transactions/sample-data';
+import { presentTransaction } from '@/features/transactions/present';
 import { TransactionRow } from '@/features/transactions/transaction-row';
 import { useActiveWallet } from '@/features/wallets/use-active-wallet';
 import { WalletSheet } from '@/features/wallets/wallet-sheet';
-import { monthName, relativeDayLabel } from '@/lib/date';
+import { monthName, monthRange, relativeDayLabel, toDateString } from '@/lib/date';
 import { useMoneyFormat } from '@/lib/money';
 import { useOnboardingStore } from '@/stores/onboarding-store';
 
@@ -30,6 +37,17 @@ function Section({ title, right }: { title: string; right?: React.ReactNode }) {
   );
 }
 
+/** Pengeluaran per tanggal menjadi deret kumulatif per hari, sebanyak days hari. */
+function cumulative(byDate: Record<string, number>, from: string, days: number) {
+  const out: number[] = [];
+  let total = 0;
+  for (let d = 1; d <= days; d++) {
+    total += byDate[`${from.slice(0, 8)}${String(d).padStart(2, '0')}`] ?? 0;
+    out.push(total);
+  }
+  return out;
+}
+
 export default function Home() {
   const money = useMoneyFormat();
   const { t, i18n } = useTranslation();
@@ -37,13 +55,36 @@ export default function Home() {
     .trim()
     .split(' ')[0];
   const locale = i18n.language === 'id' ? 'id-ID' : 'en-US';
-  const { key: walletKey, data } = useActiveWallet();
+  const { wallet } = useActiveWallet();
   const [walletSheetOpen, setWalletSheetOpen] = useState(false);
 
-  const day = Number(SAMPLE_TODAY.slice(8));
-  const spent = data.spendingThisMonth[day - 1];
-  const diff = Math.round((data.spendingLastMonth[day - 1] - spent) / 1000) * 1000;
-  const lastMonth = monthName(SAMPLE_TODAY, locale, -1);
+  const today = toDateString();
+  const day = Number(today.slice(8));
+  const thisMonth = monthRange(today);
+  const lastMonthRange = monthRange(today, -1);
+  const walletId = wallet?.id ?? '';
+
+  const totals = useDbQuery(
+    (db) => periodTotals(db, walletId, thisMonth.from, thisMonth.to),
+    [walletId, thisMonth.from],
+  );
+  const spendingNow = useDbQuery(
+    (db) => dailySpending(db, walletId, thisMonth.from, today),
+    [walletId, today],
+  );
+  const spendingPrev = useDbQuery(
+    (db) => dailySpending(db, walletId, lastMonthRange.from, lastMonthRange.to),
+    [walletId, lastMonthRange.from],
+  );
+  const recent = useDbQuery((db) => recentTransactions(db, walletId, 4), [walletId]) ?? [];
+  const unread = useDbQuery(unreadNotificationCount, []) ?? 0;
+
+  const current = cumulative(spendingNow ?? {}, thisMonth.from, day);
+  const previous = cumulative(spendingPrev ?? {}, lastMonthRange.from, lastMonthRange.days);
+  const spent = current[day - 1] ?? 0;
+  const diff =
+    Math.round(((previous[Math.min(day, previous.length) - 1] ?? 0) - spent) / 1000) * 1000;
+  const lastMonth = monthName(today, locale, -1);
 
   return (
     <Screen pageTitle={t('TABS.HOME')}>
@@ -59,19 +100,21 @@ export default function Home() {
             <IconButton icon="search" label={t('HOME.SEARCH')} />
             <IconButton
               icon="bell"
-              badge={sampleHome.unreadNotifications > 0}
-              label={t('HOME.NOTIFICATIONS_UNREAD', { count: sampleHome.unreadNotifications })}
+              badge={unread > 0}
+              label={
+                unread ? t('HOME.NOTIFICATIONS_UNREAD', { count: unread }) : t('HOME.NOTIFICATIONS')
+              }
             />
           </View>
         </View>
 
         <View className="mt-4">
           <BalanceCard
-            walletName={t(`WALLET_SETUP.WALLETS.${walletKey}`)}
-            walletIcon={data.icon}
-            balance={data.balance}
-            income={data.income}
-            expense={data.expense}
+            walletName={wallet?.name ?? ''}
+            walletIcon={(wallet?.icon ?? 'wallet') as IconName}
+            balance={wallet?.balance ?? 0}
+            income={totals?.income ?? 0}
+            expense={totals?.expense ?? 0}
             onSwitchWallet={() => setWalletSheetOpen(true)}
           />
         </View>
@@ -91,8 +134,8 @@ export default function Home() {
           }
         />
         <SpendingChart
-          current={data.spendingThisMonth}
-          previous={data.spendingLastMonth}
+          current={current}
+          previous={previous}
           label={t('HOME.CHART_LABEL', { month: lastMonth })}
         />
         <Text className="mt-2 text-[12.5px] leading-[19px] text-muted">
@@ -119,17 +162,26 @@ export default function Home() {
             />
           }
         />
-        {data.transactions.slice(0, 4).map((tx) => (
-          <TransactionRow
-            key={tx.id}
-            title={tx.title}
-            subtitle={`${relativeDayLabel(tx.date, SAMPLE_TODAY, { today: t('COMMON.TODAY'), yesterday: t('COMMON.YESTERDAY') }, locale)}, ${tx.categoryShort}`}
-            icon={tx.icon}
-            color={tx.color}
-            kind={tx.kind}
-            amount={tx.amount}
-          />
-        ))}
+        {recent.map((row) => {
+          const tx = presentTransaction(t, row);
+          const when = relativeDayLabel(
+            tx.date,
+            today,
+            { today: t('COMMON.TODAY'), yesterday: t('COMMON.YESTERDAY') },
+            locale,
+          );
+          return (
+            <TransactionRow
+              key={tx.id}
+              title={tx.title}
+              subtitle={`${when}, ${tx.categoryShort}`}
+              icon={tx.icon}
+              color={tx.color}
+              kind={tx.kind}
+              amount={tx.amount}
+            />
+          );
+        })}
       </ScrollView>
       <WalletSheet open={walletSheetOpen} onClose={() => setWalletSheetOpen(false)} />
     </Screen>

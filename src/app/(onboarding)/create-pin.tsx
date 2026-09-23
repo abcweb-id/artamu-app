@@ -11,7 +11,7 @@ export default function CreatePin() {
     <CreatePinView
       variant="first"
       onCreated={async (pin) => {
-        setPin(pin);
+        await setPin(pin);
         // Tawaran sidik jari hanya kalau ponselnya punya sidik jari terdaftar.
         router.push((await canUseBiometrics()) ? '/biometrics' : '/notifications');
       }}

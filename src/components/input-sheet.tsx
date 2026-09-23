@@ -1,4 +1,5 @@
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { useSQLiteContext } from 'expo-sqlite';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform, Pressable, Text, TextInput, View } from 'react-native';
@@ -6,20 +7,17 @@ import { Platform, Pressable, Text, TextInput, View } from 'react-native';
 import { CategoryIcon } from '@/components/ui/category-icon';
 import { Icon } from '@/components/ui/icon';
 import { Sheet } from '@/components/ui/sheet';
-import {
-  categoryById,
-  frequentCategories,
-  subcategoriesOf,
-  type Category,
-} from '@/features/categories/default-categories';
-import { SAMPLE_TODAY } from '@/features/transactions/sample-data';
+import { frequentCategoryIds, listCategories, type CategoryRow } from '@/db/repo/categories';
+import { insertTransaction } from '@/db/repo/transactions';
+import { notifyDbChanged, useDbQuery } from '@/db/use-db-query';
+import { categoryColor, categoryIcon, categoryName } from '@/features/categories/present';
 import { useActiveWallet } from '@/features/wallets/use-active-wallet';
+import { toDateString } from '@/lib/date';
 import { useMoneyFormat } from '@/lib/money';
 import { useInputSheet } from '@/stores/input-sheet-store';
-import { useTransactionsStore } from '@/stores/transactions-store';
 import { usePalette } from '@/theme/use-palette';
 
-type Kind = Category['kind'];
+type Kind = 'expense' | 'income';
 
 /** Nominal paling banyak 11 digit (ratusan miliar rupiah), seperti di prototipe. */
 const MAX_DIGITS = 11;
@@ -42,27 +40,42 @@ function InputForm({ onDone }: { onDone: () => void }) {
   const money = useMoneyFormat();
   const { t } = useTranslation();
   const c = usePalette();
-  const { key: wallet } = useActiveWallet();
-  const add = useTransactionsStore((s) => s.add);
+  const db = useSQLiteContext();
+  const { wallet } = useActiveWallet();
 
   const [kind, setKind] = useState<Kind>('expense');
   const [amount, setAmount] = useState('');
-  const [categoryId, setCategoryId] = useState(frequentCategories.expense[0]);
+  const [chosenId, setChosenId] = useState<string | null>(null);
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
   const [subOpen, setSubOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-  const category = categoryById[categoryId];
-  const main = category.parent ? categoryById[category.parent] : category;
-  const subs = subcategoriesOf(main.id);
-  const top = frequentCategories[kind].slice(0, 5);
-  const chips = top.includes(main.id) ? top : [main.id, ...top.slice(0, 4)];
-  const name = (cat: Category) => t(`CATEGORIES.${cat.key}.NAME` as 'CATEGORIES.MAKAN.NAME');
-  const short = (cat: Category) => t(`CATEGORIES.${cat.key}.SHORT` as 'CATEGORIES.MAKAN.SHORT');
+  const type = kind === 'expense' ? 'out' : 'in';
+  const all = useDbQuery((d) => listCategories(d, type), [type]) ?? [];
+  const frequent = useDbQuery((d) => frequentCategoryIds(d, type), [type]) ?? [];
+  const byId = Object.fromEntries(all.map((c) => [c.id, c]));
+  const mains = all.filter((c) => !c.parent_id);
+  // Lima tersering 60 hari terakhir, sisanya diisi urutan bawaan kategori.
+  const top = [...frequent.filter((id) => byId[id]), ...mains.map((c) => c.id)]
+    .filter((id, i, arr) => arr.indexOf(id) === i)
+    .slice(0, 5);
+
+  const category: CategoryRow | undefined = byId[chosenId ?? top[0] ?? ''];
+  const main = category?.parent_id ? byId[category.parent_id] : category;
+  const subs = main ? all.filter((c) => c.parent_id === main.id) : [];
+  const chips = !main || top.includes(main.id) ? top : [main.id, ...top.slice(0, 4)];
+  const name = (cat: CategoryRow) => categoryName(t, cat.id, cat.name);
+  const short = (cat: CategoryRow) => categoryName(t, cat.id, cat.name, true);
+  const iconOf = (cat: CategoryRow) =>
+    categoryIcon(cat.icon ?? (cat.parent_id ? byId[cat.parent_id]?.icon : null));
+  const colorOf = (cat: CategoryRow) =>
+    categoryColor(cat.color_bg ?? (cat.parent_id ? byId[cat.parent_id]?.color_bg : null));
+  const setCategoryId = setChosenId;
 
   const switchKind = (next: Kind) => {
     setKind(next);
-    setCategoryId(frequentCategories[next][0]);
+    setChosenId(null);
   };
 
   const press = (key: string) => {
@@ -74,24 +87,23 @@ function InputForm({ onDone }: { onDone: () => void }) {
     });
   };
 
-  const save = () => {
+  const save = async () => {
     const value = Number(amount);
     if (!value) {
       setError(t('INPUT.EMPTY_AMOUNT'));
       return;
     }
-    const label = category.parent ? `${short(main)}: ${name(category)}` : name(category);
-    add(wallet, {
-      id: `new-${Date.now()}`,
-      title: note.trim() || name(category),
-      category: label,
-      categoryShort: category.parent ? label : short(category),
-      icon: category.icon,
-      color: category.color,
-      kind,
+    if (!wallet || !category || saving) return;
+    setSaving(true);
+    await insertTransaction(db, {
+      walletId: wallet.id,
+      categoryId: category.id,
+      type,
       amount: value,
-      date: SAMPLE_TODAY,
+      note: note.trim(),
+      date: toDateString(),
     });
+    notifyDbChanged();
     onDone();
   };
 
@@ -147,8 +159,9 @@ function InputForm({ onDone }: { onDone: () => void }) {
       {/* Kategori tersering dan Semua */}
       <View className="-mx-1 mt-1.5 flex-row gap-0.5">
         {chips.map((id) => {
-          const cat = categoryById[id];
-          const on = main.id === id;
+          const cat = byId[id];
+          if (!cat) return null;
+          const on = main?.id === id;
           return (
             <Pressable
               key={id}
@@ -159,7 +172,7 @@ function InputForm({ onDone }: { onDone: () => void }) {
               className="min-w-0 flex-1 items-center gap-[5px] rounded-xl py-1"
             >
               <View>
-                <CategoryIcon name={cat.icon} color={cat.color} />
+                <CategoryIcon name={iconOf(cat)} color={colorOf(cat)} />
                 {/* Cincin pilihan 2 px, berjarak 2 px dari lingkaran. */}
                 <View
                   className={`absolute -inset-1 rounded-full border-2 ${on ? 'border-primary' : 'border-transparent'}`}
@@ -220,12 +233,12 @@ function InputForm({ onDone }: { onDone: () => void }) {
           a11y={t('INPUT.DATE_LABEL', { date: t('COMMON.TODAY') })}
           on
         />
-        {subs.length ? (
+        {main && subs.length ? (
           <Pill
-            label={category.parent ? name(category) : t('INPUT.SUB')}
+            label={category?.parent_id ? name(category) : t('INPUT.SUB')}
             trailing="chevD"
-            on={!!category.parent}
-            a11y={t('INPUT.SUB_LABEL', { category: name(main) })}
+            on={!!category?.parent_id}
+            a11y={t('INPUT.SUB_LABEL', { category: main ? name(main) : '' })}
             onPress={() => setSubOpen(true)}
           />
         ) : null}
@@ -280,10 +293,10 @@ function InputForm({ onDone }: { onDone: () => void }) {
         open={subOpen}
         onClose={() => setSubOpen(false)}
         stack="push"
-        title={t('INPUT.SUB_TITLE', { category: name(main) })}
+        title={t('INPUT.SUB_TITLE', { category: main ? name(main) : '' })}
       >
-        {[main, ...subs].map((cat) => {
-          const on = cat.id === categoryId;
+        {(main ? [main, ...subs] : []).map((cat) => {
+          const on = cat.id === category?.id;
           return (
             <Pressable
               key={cat.id}
@@ -296,7 +309,7 @@ function InputForm({ onDone }: { onDone: () => void }) {
               className="-mx-5 flex-row items-center gap-3 px-5 py-3 active:bg-key"
             >
               <Text className="flex-1 text-[15px] text-text">
-                {cat.id === main.id ? t('INPUT.SUB_NONE') : name(cat)}
+                {cat.id === main?.id ? t('INPUT.SUB_NONE') : name(cat)}
               </Text>
               {on ? <Icon name="check" color={c.primary} size={22} /> : null}
             </Pressable>

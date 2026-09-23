@@ -1,3 +1,5 @@
+import { useSQLiteContext } from 'expo-sqlite';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from 'react-native';
 
@@ -6,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import type { IconName } from '@/components/ui/icon';
 import { IconBadge } from '@/components/ui/icon-badge';
 import { IconMark } from '@/components/ui/icon-mark';
-import { useAppStore } from '@/stores/app-store';
+import { finishOnboarding } from '@/features/onboarding/finish';
 
 const POINTS: { icon: IconName; key: 'DAILY' | 'RECURRING' | 'DEBTS' }[] = [
   { icon: 'clock', key: 'DAILY' },
@@ -16,7 +18,14 @@ const POINTS: { icon: IconName; key: 'DAILY' | 'RECURRING' | 'DEBTS' }[] = [
 
 export default function NotificationPermission() {
   const { t } = useTranslation();
-  const setOnboarded = useAppStore((s) => s.setOnboarded);
+  const db = useSQLiteContext();
+  const [busy, setBusy] = useState(false);
+  // Buat dompet dan saldo awal di database, lalu masuk ke Beranda.
+  const finish = async () => {
+    if (busy) return;
+    setBusy(true);
+    await finishOnboarding(db, t);
+  };
 
   return (
     <Screen pageTitle={t('NOTIF_PERMISSION.PAGE_TITLE')} bottomInset className="pb-[30px]">
@@ -39,12 +48,12 @@ export default function NotificationPermission() {
       ))}
       <View className="mt-auto">
         {/* Permintaan izin sistem (expo-notifications) belum dipasang; keduanya lanjut ke Beranda. */}
-        <Button label={t('NOTIF_PERMISSION.ALLOW')} onPress={() => setOnboarded(true)} />
+        <Button label={t('NOTIF_PERMISSION.ALLOW')} onPress={finish} />
         <Button
           variant="link"
           label={t('NOTIF_PERMISSION.LATER')}
           className="mt-2.5"
-          onPress={() => setOnboarded(true)}
+          onPress={finish}
         />
       </View>
     </Screen>

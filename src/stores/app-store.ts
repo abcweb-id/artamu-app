@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
-import type { StarterWallet } from './onboarding-store';
+import { checkPin, savePin, savePinLockedUntil } from '@/lib/pin';
+
 import { useSettingsStore } from './settings-store';
 
 /** Salah PIN sebanyak ini mengunci layar PIN sementara. */
@@ -10,81 +11,88 @@ export const PIN_LOCK_MS = 30_000;
 type PinResult = 'ok' | 'wrong' | 'locked';
 
 type AppState = {
-  /** Nanti dibaca dari tabel settings setelah migrasi versi 1 dipasang. */
+  /** Disimpan di tabel settings (onboarded). */
   onboarded: boolean;
-  /** Layar PIN tampil. Aktif saat aplikasi kembali dari latar belakang. */
+  /** Layar PIN tampil. Aktif saat aplikasi dibuka dan setelah ditinggalkan (Kunci otomatis). */
   locked: boolean;
-  /**
-   * Sementara disimpan di memori, hilang saat aplikasi ditutup.
-   * Nanti yang disimpan hash-nya di expo-secure-store, bukan PIN-nya.
-   */
-  pin: string | null;
+  /** Ada hash PIN di penyimpanan aman. PIN-nya sendiri tidak pernah disimpan di memori. */
+  hasPin: boolean;
   /** Buka dengan sidik jari. Hanya aktif kalau pengguna memilihnya sendiri. */
   biometricEnabled: boolean;
-  /** Dompet yang saldo dan transaksinya tampil di Beranda dan Transaksi. */
-  activeWallet: StarterWallet;
+  /** ID dompet yang tampil di Beranda dan Transaksi. null: dompet pertama. */
+  activeWalletId: string | null;
   /** Saldo disamarkan dengan titik (ikon mata di kartu saldo). */
   hideBalance: boolean;
-  /** Petunjuk yang sudah ditutup dengan "Mengerti". Nanti disimpan di tabel settings. */
+  /** Petunjuk yang sudah ditutup dengan "Mengerti". */
   dismissedHints: string[];
   failedAttempts: number;
-  /** Waktu (ms) sampai layar PIN boleh dicoba lagi. */
+  /** Waktu (ms) sampai layar PIN boleh dicoba lagi. Disimpan di penyimpanan aman. */
   lockedUntil: number | null;
   setOnboarded: (value: boolean) => void;
-  setPin: (pin: string) => void;
+  setPin: (pin: string) => Promise<void>;
   setBiometricEnabled: (value: boolean) => void;
-  setActiveWallet: (wallet: StarterWallet) => void;
+  setActiveWalletId: (id: string) => void;
   toggleHideBalance: () => void;
   dismissHint: (key: string) => void;
   lock: () => void;
   /** Dibuka tanpa PIN: setelah sidik jari dikenali atau PIN baru dibuat. */
   unlock: () => void;
-  verifyPin: (input: string) => PinResult;
+  verifyPin: (input: string) => Promise<PinResult>;
   clearPinLock: () => void;
-  /** Hapus data dan mulai dari awal (Lupa PIN). */
+  /** Hapus data dan mulai dari awal. */
   reset: () => void;
 };
 
-const initialState = {
+export const initialAppState = {
   onboarded: false,
   locked: false,
-  pin: null,
+  hasPin: false,
   biometricEnabled: false,
-  activeWallet: 'BANK' as StarterWallet,
+  activeWalletId: null as string | null,
   hideBalance: false,
   dismissedHints: [] as string[],
   failedAttempts: 0,
-  lockedUntil: null,
+  lockedUntil: null as number | null,
 };
 
 export const useAppStore = create<AppState>((set, get) => ({
-  ...initialState,
+  ...initialAppState,
   setOnboarded: (onboarded) => set({ onboarded }),
-  setPin: (pin) => set({ pin }),
+  setPin: async (pin) => {
+    await savePin(pin);
+    set({ hasPin: true });
+  },
   setBiometricEnabled: (biometricEnabled) => set({ biometricEnabled }),
-  setActiveWallet: (activeWallet) => set({ activeWallet }),
+  setActiveWalletId: (activeWalletId) => set({ activeWalletId }),
   toggleHideBalance: () => set((s) => ({ hideBalance: !s.hideBalance })),
   dismissHint: (key) => set((s) => ({ dismissedHints: [...s.dismissedHints, key] })),
   lock: () => {
-    const { onboarded, pin } = get();
+    const { onboarded, hasPin } = get();
     // Kunci dengan PIN dimatikan di Pengaturan: jangan pernah meminta PIN.
-    if (onboarded && pin && useSettingsStore.getState().pinEnabled) set({ locked: true });
+    if (onboarded && hasPin && useSettingsStore.getState().pinEnabled) set({ locked: true });
   },
-  unlock: () => set({ locked: false, failedAttempts: 0, lockedUntil: null }),
-  verifyPin: (input) => {
-    const { pin, failedAttempts } = get();
-    if (input === pin) {
-      set({ locked: false, failedAttempts: 0, lockedUntil: null });
+  unlock: () => {
+    set({ locked: false, failedAttempts: 0, lockedUntil: null });
+    savePinLockedUntil(null);
+  },
+  verifyPin: async (input) => {
+    if (await checkPin(input)) {
+      get().unlock();
       return 'ok';
     }
-    const attempts = failedAttempts + 1;
+    const attempts = get().failedAttempts + 1;
     if (attempts >= MAX_PIN_ATTEMPTS) {
-      set({ failedAttempts: 0, lockedUntil: Date.now() + PIN_LOCK_MS });
+      const until = Date.now() + PIN_LOCK_MS;
+      set({ failedAttempts: 0, lockedUntil: until });
+      await savePinLockedUntil(until);
       return 'locked';
     }
     set({ failedAttempts: attempts });
     return 'wrong';
   },
-  clearPinLock: () => set({ lockedUntil: null }),
-  reset: () => set(initialState),
+  clearPinLock: () => {
+    set({ lockedUntil: null });
+    savePinLockedUntil(null);
+  },
+  reset: () => set(initialAppState),
 }));

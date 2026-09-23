@@ -3,47 +3,47 @@ import { Pressable, Text, View } from 'react-native';
 
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
+import type { IconName } from '@/components/ui/icon';
 import { IconBadge } from '@/components/ui/icon-badge';
 import { Sheet } from '@/components/ui/sheet';
-import { sampleWallets } from '@/features/transactions/sample-data';
 import { useMoneyFormat } from '@/lib/money';
 import { useAppStore } from '@/stores/app-store';
 import { usePalette } from '@/theme/use-palette';
 
-import { useActiveWallet, useWalletBalances } from './use-active-wallet';
+import { useActiveWallet } from './use-active-wallet';
 
 /** Lembar Pilih dompet dari pemilih dompet di Beranda dan Transaksi. */
 export function WalletSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const money = useMoneyFormat();
   const { t } = useTranslation();
   const c = usePalette();
-  const { key: active, wallets } = useActiveWallet();
-  const setActiveWallet = useAppStore((s) => s.setActiveWallet);
-  const balances = useWalletBalances();
+  const { wallet: active, wallets } = useActiveWallet();
+  const setActiveWalletId = useAppStore((s) => s.setActiveWalletId);
 
   return (
     <Sheet open={open} onClose={onClose} title={t('WALLET_PICKER.TITLE')}>
       <Text className="-mt-1.5 mb-2 text-[12.5px] text-muted">{t('WALLET_PICKER.SUBTITLE')}</Text>
       {wallets.map((w) => {
-        const name = t(`WALLET_SETUP.WALLETS.${w}`);
-        const selected = w === active;
+        // Nama dompet adalah data pengguna, tidak diterjemahkan.
+        const name = w.name;
+        const selected = w.id === active?.id;
         return (
           <Pressable
-            key={w}
+            key={w.id}
             accessibilityRole="button"
             accessibilityState={{ selected }}
             accessibilityLabel={selected ? t('WALLET_PICKER.SELECTED', { wallet: name }) : name}
             onPress={() => {
-              setActiveWallet(w);
+              setActiveWalletId(w.id);
               onClose();
             }}
             className="-mx-5 flex-row items-center gap-3 px-5 py-3.5 active:bg-key"
           >
-            <IconBadge name={sampleWallets[w].icon} size={40} />
+            <IconBadge name={w.icon as IconName} size={40} />
             <View className="flex-1">
               <Text className="text-[15px] font-medium leading-[22px] text-text">{name}</Text>
               <Text className="text-[12.5px] text-muted" style={{ fontVariant: ['tabular-nums'] }}>
-                {money.rp(balances[w])}
+                {money.rp(w.balance)}
               </Text>
             </View>
             {selected ? <Icon name="check" color={c.primary} size={22} /> : null}

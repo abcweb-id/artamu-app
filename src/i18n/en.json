@@ -168,7 +168,9 @@
     "REMAINING": "Remaining",
     "ROW_LABEL": "{{label}} {{amount}}. See transactions",
     "HINT": "Press and hold a transaction to duplicate it, select several, or delete.",
-    "NO_RESULTS": "No transactions match “{{query}}”."
+    "NO_RESULTS": "No transactions match “{{query}}”.",
+    "EMPTY_TITLE": "No records this month yet",
+    "EMPTY_BODY": "Record your first expense. Just the amount, a category, then save."
   },
   "WALLET_PICKER": {
     "TITLE": "Choose wallet",
@@ -191,7 +193,7 @@
       "SHORT": "Shopping"
     },
     "TAGIHAN": {
-      "NAME": "Rent and bills",
+      "NAME": "Bills",
       "SHORT": "Bills"
     },
     "SEHAT": {
@@ -242,14 +244,6 @@
       "NAME": "Sales of goods",
       "SHORT": "Sales"
     },
-    "CASHBACK": {
-      "NAME": "Cashback and promos",
-      "SHORT": "Cashback"
-    },
-    "KIRIMAN": {
-      "NAME": "Money from family",
-      "SHORT": "Family"
-    },
     "HADIAH": {
       "NAME": "Gifts",
       "SHORT": "Gifts"
@@ -258,49 +252,21 @@
       "NAME": "Other",
       "SHORT": "Other"
     },
-    "BELANJA_DAPUR": {
-      "NAME": "Groceries",
-      "SHORT": "Groceries"
+    "SYS_TRANSFER": {
+      "NAME": "Transfer between wallets",
+      "SHORT": "Transfer"
     },
-    "BELANJA_PAKAIAN": {
-      "NAME": "Clothing",
-      "SHORT": "Clothing"
+    "SYS_ADJUSTMENT": {
+      "NAME": "Balance adjustment",
+      "SHORT": "Adjustment"
     },
-    "BELANJA_BARANG": {
-      "NAME": "Household goods",
-      "SHORT": "Household goods"
+    "SYS_DEBT": {
+      "NAME": "Debts and loans",
+      "SHORT": "Debts"
     },
-    "TAGIHAN_KOS": {
-      "NAME": "Rent",
-      "SHORT": "Rent"
-    },
-    "TAGIHAN_LISTRIK": {
-      "NAME": "Electricity",
-      "SHORT": "Electricity"
-    },
-    "TAGIHAN_INTERNET": {
-      "NAME": "Internet",
-      "SHORT": "Internet"
-    },
-    "MAKAN_JAJAN": {
-      "NAME": "Snacks and coffee",
-      "SHORT": "Snacks and coffee"
-    },
-    "PROYEK_WEB": {
-      "NAME": "Web development",
-      "SHORT": "Web development"
-    },
-    "PROYEK_DESAIN": {
-      "NAME": "Design",
-      "SHORT": "Design"
-    },
-    "INVEST_REKSA": {
-      "NAME": "Mutual funds",
-      "SHORT": "Mutual funds"
-    },
-    "INVEST_BUNGA": {
-      "NAME": "Savings interest",
-      "SHORT": "Savings interest"
+    "SYS_OPENING": {
+      "NAME": "Opening balance",
+      "SHORT": "Opening balance"
     }
   },
   "INPUT": {

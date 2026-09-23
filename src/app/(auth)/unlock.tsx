@@ -34,7 +34,6 @@ const formatCountdown = (s: number) => `${Math.floor(s / 60)}.${String(s % 60).p
 export default function Lock() {
   const { t } = useTranslation();
   const verifyPin = useAppStore((s) => s.verifyPin);
-  const failedAttempts = useAppStore((s) => s.failedAttempts);
   const lockedUntil = useAppStore((s) => s.lockedUntil);
   const clearPinLock = useAppStore((s) => s.clearPinLock);
   const biometricEnabled = useAppStore((s) => s.biometricEnabled);
@@ -44,10 +43,12 @@ export default function Lock() {
   const secondsLeft = useSecondsLeft(lockedUntil, clearPinLock);
   const blocked = secondsLeft > 0;
 
-  const { pin, press, remove } = usePinEntry((entered) => {
-    const result = verifyPin(entered);
+  const { pin, press, remove } = usePinEntry(async (entered) => {
+    const result = await verifyPin(entered);
     setError(
-      result === 'wrong' ? t('PIN.WRONG', { count: MAX_PIN_ATTEMPTS - failedAttempts - 1 }) : '',
+      result === 'wrong'
+        ? t('PIN.WRONG', { count: MAX_PIN_ATTEMPTS - useAppStore.getState().failedAttempts })
+        : '',
     );
   });
 

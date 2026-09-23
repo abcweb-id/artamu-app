@@ -16,9 +16,9 @@ Tiga kotak per layar:
 | Item di checklist | 36 (35 layar prototipe ditambah bottom bar) |
 | Rute ada | 13 |
 | Sesuai wireframe | 13 |
-| Terhubung database | 0 |
+| Terhubung database | 10 |
 
-Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql` dan belum dipasang sebagai migrasi.
+Skema versi 1 terpasang sebagai migrasi `src/db/migrations/0001_init.ts` (salinan persis `docs/database/0001_init.sql`). Pengaturan di tabel settings, PIN di expo-secure-store.
 
 ## Kerangka utama (dikerjakan duluan)
 
@@ -32,7 +32,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Sesuai wireframe: simbol dan ARTAMU, judul, tiga poin fitur, tombol "Buat PIN dan mulai", dan "Pulihkan dari cadangan". Dicek berdampingan dengan prototipe di mode terang dan gelap
 - [x] Tombol "Buat PIN dan mulai" ke layar Isi nama panggilan
 - [ ] Tombol "Pulihkan dari cadangan" berfungsi (layar cadangan belum dibuat)
-- [ ] Terhubung database: status onboarding masih di memori, hilang setiap aplikasi ditutup
+- [x] Terhubung database: status onboarding di tabel settings (`onboarded`), tetap tersimpan saat aplikasi ditutup
 - [x] Alur lengkap sampai Beranda diuji dengan klik di browser (id dan en, terang dan gelap)
 
 ### 3. Bottom bar
@@ -48,7 +48,7 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Pemilih dompet membuka lembar Pilih dompet (`src/features/wallets/wallet-sheet.tsx`): dompet yang dipilih saat onboarding dengan saldonya, centang di dompet aktif. Memilih dompet mengganti saldo, grafik, dan transaksi di Beranda dan Transaksi sekaligus. Diuji di browser
 - [ ] Tombol Kelola dompet dan Transfer di lembar Pilih dompet (layar belum dibuat)
 - [ ] Tombol cari, notifikasi, aksi cepat, grafik (ke Laporan), dan baris transaksi membuka layarnya (layar tujuan belum dibuat)
-- [ ] Terhubung database: saldo, grafik, dan transaksi masih DATA CONTOH dari prototipe (`src/features/home/sample-data.ts`); nama panggilan sudah dari isian onboarding
+- [x] Terhubung database: saldo dari `v_wallet_balances`, pemasukan dan pengeluaran bulan ini, grafik dari pengeluaran harian, 4 transaksi terbaru, jumlah notifikasi belum dibaca. Pemasukan, pengeluaran, dan grafik tidak menghitung transaksi sistem (saldo awal, transfer)
 
 ### 5. Daftar transaksi
 - [x] Rute ada: `src/app/(tabs)/transactions.tsx`, komponen di `src/features/transactions/`
@@ -56,14 +56,14 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Pencarian berdasarkan judul atau nama kategori, dengan pesan kalau tidak ada yang cocok (diuji di browser)
 - [x] Pemilih dompet membuka lembar Pilih dompet yang sama dengan Beranda
 - [ ] Belum berfungsi: saringan, pindah bulan, laporan, ketuk baris Pemasukan/Pengeluaran, ketuk dan tahan transaksi (layar tujuannya belum dibuat)
-- [ ] Terhubung database: masih DATA CONTOH dari prototipe (`src/features/transactions/sample-data.ts`), dipakai bersama dengan Beranda
+- [x] Terhubung database: transaksi dan ringkasan per bulan dari `v_transactions`. Pindah bulan sekarang berfungsi (mundur ke bulan lalu, maju sampai bulan ini), dengan tampilan kosong "Belum ada catatan di bulan ini"
 
 ### 6. Input transaksi
 - [x] Rute ada: `src/components/input-sheet.tsx`, lembar bawah dari tombol ＋. Kategori bawaan di `src/features/categories/default-categories.ts` (20 utama, 11 sub, nama id/en)
 - [x] Sesuai wireframe: sakelar Keluar/Masuk, nominal Rp dengan keypad (000 dan hapus, maksimal 11 digit), 5 kategori tersering dengan cincin pilihan dan Semua, catatan, pil tanggal, subkategori, dan foto struk, Batal dan Simpan transaksi. Dicek berdampingan dengan prototipe (terang dan gelap)
 - [x] Simpan tanpa nominal: "Isi nominal dulu". Simpan: transaksi masuk ke dompet aktif, saldo, grafik, transaksi terbaru, dan Daftar transaksi langsung berubah. Formulir kosong lagi tiap dibuka. Pilih subkategori lewat lembar kecil. Semua diuji di browser
 - [ ] Belum dibuat: daftar Semua kategori, pemilih tanggal (selalu hari ini), foto struk, saran kategori dari catatan ("Biasanya masuk …"), ubah transaksi
-- [ ] Terhubung database: transaksi baru hanya di memori (`src/stores/transactions-store.ts`), hilang saat aplikasi ditutup
+- [x] Terhubung database: kategori dari tabel categories (18 bawaan dari skema, nama diterjemahkan lewat ID tetap), 5 tersering dari 60 hari terakhir, simpan = INSERT ke transactions. Skema belum punya subkategori bawaan, jadi pil Sub belum muncul
 
 ### 7. Pengaturan
 - [x] Rute ada: `src/app/(tabs)/settings.tsx`, Ganti PIN di `src/app/change-pin.tsx`, pengaturan di `src/stores/settings-store.ts`
@@ -72,27 +72,27 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Buka dengan sidik jari: menyalakan meminta verifikasi dulu; tidak aktif kalau ponsel tidak punya sidik jari. Belum diuji di HP
 - [ ] Tampilan saja (layar belum dibuat): Warna tema, Kategori, Dompet, jam pengingat, Ekspor ke CSV, Cadangan dan pemulihan, Bantuan, Tentang
 - [ ] Pengingat harian dan notifikasi tagihan rutin hanya menyimpan pilihan; notifikasi belum dikirim (expo-notifications belum dipasang)
-- [ ] Terhubung database: semua pengaturan masih di memori, nanti di tabel settings
+- [x] Terhubung database: semua pengaturan di tabel settings (language, theme_mode, auto_lock, daily_reminder, pin_enabled, bill_notifications, biometric), tersimpan setelah aplikasi ditutup
 
 ### 8. Akun dan profil
 - [x] Rute ada: `src/app/(tabs)/account.tsx`
 - [x] Sesuai wireframe: lingkaran inisial dan nama (atau ikon dan "Tanpa nama"), Mencatat sejak, tiga kotak statistik, Akun cloud, Catatan lain, Dompet dengan saldo dan dompet aktif, Kelola dompet, Profil, Zona bahaya. Dicek berdampingan dengan prototipe
 - [x] Berfungsi (diuji di browser): nama dari onboarding, jumlah transaksi bertambah saat mencatat, ketuk dompet menjadikannya dompet aktif, Ganti PIN, Hapus semua data (lembar konfirmasi bersama di `src/features/data/wipe-sheet.tsx`)
 - [ ] Tampilan saja (layar belum dibuat): Masuk atau daftar (rilis 2.0), Transaksi rutin, Hutang piutang, Laporan, Kelola dompet, Ubah nama dan foto, Cadangan
-- [ ] Terhubung database: statistik, Mencatat sejak, dan jumlah rutin/hutang masih DATA CONTOH (`src/features/home/sample-data.ts`)
+- [x] Terhubung database: jumlah transaksi, hari beruntun, bulan, Mencatat sejak, rutin aktif, hutang terbuka, dan dompet dengan saldo dihitung dari database. Hapus semua data mengosongkan tabel dan mengembalikan data bawaan
 
 ## Alur pertama kali buka
 
 ### 9. Isi nama panggilan
 - [x] Rute ada: `src/app/(onboarding)/nickname.tsx`
 - [x] Sesuai wireframe: tombol kembali, lingkaran ikon, judul, kolom nama (maks 24 huruf), Lanjut buat PIN, Lewati
-- [ ] Terhubung database: nama masih di memori (`src/stores/onboarding-store.ts`), nanti ke tabel settings
+- [x] Terhubung database: nama disimpan di tabel settings (`nickname`) saat onboarding selesai
 
 ### 10. Dompet dan saldo awal
 - [x] Rute ada: `src/app/(onboarding)/wallets.tsx`
 - [x] Sesuai wireframe: Tunai, Bank, E-wallet dengan kotak centang (Tunai dan Bank terpilih dari awal), isian saldo berawalan Rp dan bertitik ribuan, pesan "Pilih minimal satu dompet", Langkah 2 dari 3
 - [ ] Tombol "Tambah dompet lain" berfungsi (formulir dompet belum dibuat)
-- [ ] Terhubung database: pilihan dan saldo masih di memori, nanti jadi baris wallets dan transaksi saldo awal
+- [x] Terhubung database: saat onboarding selesai, tiap dompet terpilih menjadi baris wallets, dan saldo awal dicatat sebagai transaksi berkategori sistem Saldo awal
 
 ### 11. Izin notifikasi
 - [x] Rute ada: `src/app/(onboarding)/notifications.tsx`
@@ -109,12 +109,12 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [x] Lupa PIN: lembar dengan dua pilihan (sidik jari lalu Buat PIN baru; Hapus data dan mulai dari awal) dan Batal. Sesuai wireframe
 - [x] Hapus semua data: lembar konfirmasi, ketik HAPUS (en: DELETE), kembali ke layar sambutan. Diuji di browser. Sementara hanya mengosongkan data di memori
 - [x] Tambahan di luar wireframe: tawaran "Buka dengan sidik jari?" setelah Buat PIN (`src/app/(onboarding)/biometrics.tsx`), hanya kalau ponsel punya sidik jari terdaftar. Sidik jari tidak pernah aktif otomatis
-- [ ] Terhubung database: PIN masih di memori, nanti hash-nya di expo-secure-store, bukan SQLite
+- [x] Terhubung penyimpanan aman: PIN disimpan sebagai hash SHA-256 bersalt di expo-secure-store (localStorage di web, hanya untuk pengembangan). Aplikasi dibuka lagi langsung meminta PIN
 
 ### 13. PIN terkunci
 - [x] Rute ada: bagian dari `src/app/(auth)/unlock.tsx`
 - [x] Sesuai wireframe: lingkaran merah, hitung mundur 0.30 setelah 5 kali salah, keypad pudar dan tidak bisa ditekan
-- [ ] Terhubung database: tidak perlu (waktu kunci nanti di expo-secure-store)
+- [x] Waktu kunci PIN disimpan di expo-secure-store, jadi tetap terkunci walau aplikasi ditutup
 
 ## Keadaan khusus
 
@@ -254,5 +254,5 @@ Database belum punya tabel. Skema versi 1 masih di `docs/database/0001_init.sql`
 - [ ] Pilihan bahasa di Pengaturan
 - [x] Token `on-primary` untuk teks di atas warna utama (putih di mode terang, gelap di mode gelap)
 - [x] Ikon Phosphor (`phosphor-react-native`): 57 ikon prototipe dipetakan ke Phosphor di `src/components/ui/icon.tsx`, diimpor per ikon. Mendukung bobot thin, light, regular, bold, fill, dan duotone
-- [ ] Skema database versi 1 dipasang sebagai migrasi
+- [x] Skema database versi 1 dipasang sebagai migrasi, diuji: onboarding, catat transaksi, tutup dan buka lagi, data dan pengaturan tetap ada
 - [x] Layar gagal membuka database (`src/db/database-gate.tsx`, tidak ada di wireframe). Web: "Artamu sedang terbuka di tab lain" dengan Muat ulang, karena penyimpanan browser hanya bisa dipakai satu tab (error `Invalid VFS state`). HP: "Data tidak bisa dibuka" dengan Coba lagi

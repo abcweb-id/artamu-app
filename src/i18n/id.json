@@ -168,7 +168,9 @@
     "REMAINING": "Sisa",
     "ROW_LABEL": "{{label}} {{amount}}. Lihat transaksinya",
     "HINT": "Tahan sebuah transaksi untuk menduplikat, memilih beberapa, atau menghapus.",
-    "NO_RESULTS": "Tidak ada transaksi yang cocok dengan “{{query}}”."
+    "NO_RESULTS": "Tidak ada transaksi yang cocok dengan “{{query}}”.",
+    "EMPTY_TITLE": "Belum ada catatan di bulan ini",
+    "EMPTY_BODY": "Catat pengeluaran pertamamu. Cukup nominal, kategori, lalu simpan."
   },
   "WALLET_PICKER": {
     "TITLE": "Pilih dompet",
@@ -191,7 +193,7 @@
       "SHORT": "Belanja"
     },
     "TAGIHAN": {
-      "NAME": "Kos dan tagihan",
+      "NAME": "Tagihan",
       "SHORT": "Tagihan"
     },
     "SEHAT": {
@@ -242,14 +244,6 @@
       "NAME": "Penjualan barang",
       "SHORT": "Penjualan"
     },
-    "CASHBACK": {
-      "NAME": "Cashback dan promo",
-      "SHORT": "Cashback"
-    },
-    "KIRIMAN": {
-      "NAME": "Kiriman keluarga",
-      "SHORT": "Kiriman"
-    },
     "HADIAH": {
       "NAME": "Hadiah",
       "SHORT": "Hadiah"
@@ -258,49 +252,21 @@
       "NAME": "Lainnya",
       "SHORT": "Lainnya"
     },
-    "BELANJA_DAPUR": {
-      "NAME": "Dapur",
-      "SHORT": "Dapur"
+    "SYS_TRANSFER": {
+      "NAME": "Transfer antar dompet",
+      "SHORT": "Transfer"
     },
-    "BELANJA_PAKAIAN": {
-      "NAME": "Pakaian",
-      "SHORT": "Pakaian"
+    "SYS_ADJUSTMENT": {
+      "NAME": "Penyesuaian saldo",
+      "SHORT": "Penyesuaian"
     },
-    "BELANJA_BARANG": {
-      "NAME": "Barang rumah",
-      "SHORT": "Barang rumah"
+    "SYS_DEBT": {
+      "NAME": "Hutang piutang",
+      "SHORT": "Hutang"
     },
-    "TAGIHAN_KOS": {
-      "NAME": "Kos",
-      "SHORT": "Kos"
-    },
-    "TAGIHAN_LISTRIK": {
-      "NAME": "Listrik",
-      "SHORT": "Listrik"
-    },
-    "TAGIHAN_INTERNET": {
-      "NAME": "Internet",
-      "SHORT": "Internet"
-    },
-    "MAKAN_JAJAN": {
-      "NAME": "Jajan dan kopi",
-      "SHORT": "Jajan dan kopi"
-    },
-    "PROYEK_WEB": {
-      "NAME": "Pembuatan web",
-      "SHORT": "Pembuatan web"
-    },
-    "PROYEK_DESAIN": {
-      "NAME": "Desain",
-      "SHORT": "Desain"
-    },
-    "INVEST_REKSA": {
-      "NAME": "Reksa dana",
-      "SHORT": "Reksa dana"
-    },
-    "INVEST_BUNGA": {
-      "NAME": "Bunga tabungan",
-      "SHORT": "Bunga tabungan"
+    "SYS_OPENING": {
+      "NAME": "Saldo awal",
+      "SHORT": "Saldo awal"
     }
   },
   "INPUT": {

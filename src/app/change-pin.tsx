@@ -10,6 +10,7 @@ import { CreatePinView } from '@/features/pin/create-pin-view';
 import { PinDots } from '@/features/pin/pin-dots';
 import { PinPad } from '@/features/pin/pin-pad';
 import { usePinEntry } from '@/features/pin/use-pin-entry';
+import { checkPin } from '@/lib/pin';
 import { useAppStore } from '@/stores/app-store';
 
 /**
@@ -18,13 +19,12 @@ import { useAppStore } from '@/stores/app-store';
  */
 export default function ChangePin() {
   const { t } = useTranslation();
-  const pin = useAppStore((s) => s.pin);
   const setPin = useAppStore((s) => s.setPin);
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState('');
 
-  const entry = usePinEntry((entered) => {
-    if (entered === pin) {
+  const entry = usePinEntry(async (entered) => {
+    if (await checkPin(entered)) {
       setVerified(true);
       setError('');
     } else {
@@ -37,8 +37,8 @@ export default function ChangePin() {
       <CreatePinView
         variant="reset"
         onBack={() => router.back()}
-        onCreated={(next) => {
-          setPin(next);
+        onCreated={async (next) => {
+          await setPin(next);
           router.back();
         }}
       />

@@ -16,6 +16,7 @@ import { AppState, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { SplashOverlay } from '@/components/splash-overlay';
+import { AppBootstrap } from '@/db/app-bootstrap';
 import { DatabaseGate } from '@/db/database-gate';
 import i18n, { deviceLanguage } from '@/i18n';
 import { useAppStore } from '@/stores/app-store';
@@ -59,13 +60,15 @@ export default function RootLayout() {
       {/* vars() hanya terbaca oleh komponen yang dibungkus NativeWind, jadi dipasang di View. */}
       <View style={[{ flex: 1 }, themeVars[scheme]]}>
         <DatabaseGate>
-          <ThemeProvider value={navTheme}>
-            <BottomSheetModalProvider>
-              <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-              <RootStack />
-              <SplashOverlay />
-            </BottomSheetModalProvider>
-          </ThemeProvider>
+          <AppBootstrap>
+            <ThemeProvider value={navTheme}>
+              <BottomSheetModalProvider>
+                <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+                <RootStack />
+                <SplashOverlay />
+              </BottomSheetModalProvider>
+            </ThemeProvider>
+          </AppBootstrap>
         </DatabaseGate>
       </View>
     </GestureHandlerRootView>

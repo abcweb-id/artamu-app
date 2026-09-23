@@ -9,8 +9,8 @@ export default function ResetPin() {
   return (
     <CreatePinView
       variant="reset"
-      onCreated={(pin) => {
-        setPin(pin);
+      onCreated={async (pin) => {
+        await setPin(pin);
         unlock();
       }}
     />

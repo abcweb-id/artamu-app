@@ -5,18 +5,18 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 
 import { Screen } from '@/components/screen';
 import { TAB_SCROLL_BOTTOM_PADDING } from '@/components/tab-bar';
-import { Icon } from '@/components/ui/icon';
+import { Icon, type IconName } from '@/components/ui/icon';
 import { ListRow } from '@/components/ui/list-row';
 import { ScreenTitle } from '@/components/ui/screen-title';
 import { SectionLabel } from '@/components/ui/section-label';
 import { WipeSheet } from '@/features/data/wipe-sheet';
-import { sampleProfile } from '@/features/home/sample-data';
-import { sampleWallets } from '@/features/transactions/sample-data';
-import { useActiveWallet, useWalletBalances } from '@/features/wallets/use-active-wallet';
+import { profileStats } from '@/db/repo/transactions';
+import { useDbQuery } from '@/db/use-db-query';
+import { useActiveWallet } from '@/features/wallets/use-active-wallet';
+import { toDateString } from '@/lib/date';
 import { useMoneyFormat } from '@/lib/money';
 import { useAppStore } from '@/stores/app-store';
 import { useOnboardingStore } from '@/stores/onboarding-store';
-import { useTransactionsStore } from '@/stores/transactions-store';
 import { usePalette } from '@/theme/use-palette';
 
 /** "Musyaffa Hanif" -> "MH". */
@@ -33,22 +33,20 @@ export default function Account() {
   const c = usePalette();
   const money = useMoneyFormat();
   const name = useOnboardingStore((s) => s.nickname).trim();
-  const { key: active, wallets } = useActiveWallet();
-  const balances = useWalletBalances();
-  const setActiveWallet = useAppStore((s) => s.setActiveWallet);
-  const added = useTransactionsStore((s) => s.added);
+  const { wallet: active, wallets } = useActiveWallet();
+  const setActiveWalletId = useAppStore((s) => s.setActiveWalletId);
+  const profile = useDbQuery(profileStats, []);
   const [wipeOpen, setWipeOpen] = useState(false);
 
   const locale = i18n.language === 'en' ? 'en-US' : 'id-ID';
+  // Bulan transaksi pertama; sebelum ada transaksi, bulan ini.
   const since = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(
-    new Date(`${sampleProfile.since}T00:00:00`),
+    new Date(`${profile?.since ?? toDateString()}T00:00:00`),
   );
-  const transactionCount =
-    sampleProfile.transactionCount + Object.values(added).reduce((n, list) => n + list.length, 0);
   const stats = [
-    [transactionCount, t('ACCOUNT.STATS.TRANSACTIONS')],
-    [sampleProfile.streakDays, t('ACCOUNT.STATS.STREAK')],
-    [sampleProfile.months, t('ACCOUNT.STATS.MONTHS')],
+    [profile?.transactions ?? 0, t('ACCOUNT.STATS.TRANSACTIONS')],
+    [profile?.streakDays ?? 0, t('ACCOUNT.STATS.STREAK')],
+    [profile?.months ?? 0, t('ACCOUNT.STATS.MONTHS')],
   ] as const;
 
   return (
@@ -107,13 +105,13 @@ export default function Account() {
           icon="repeat"
           title={t('ACCOUNT.RECURRING')}
           subtitle={t('ACCOUNT.RECURRING_HINT')}
-          value={String(sampleProfile.activeRecurring)}
+          value={String(profile?.activeRecurring ?? 0)}
           onPress={() => {}}
         />
         <ListRow
           icon="swap"
           title={t('ACCOUNT.DEBTS')}
-          value={String(sampleProfile.openDebts)}
+          value={String(profile?.openDebts ?? 0)}
           onPress={() => {}}
         />
         <ListRow
@@ -126,18 +124,16 @@ export default function Account() {
         <SectionLabel>{t('ACCOUNT.WALLETS')}</SectionLabel>
         {wallets.map((w) => (
           <Pressable
-            key={w}
+            key={w.id}
             accessibilityRole="button"
-            accessibilityState={{ selected: w === active }}
-            onPress={() => setActiveWallet(w)}
+            accessibilityState={{ selected: w.id === active?.id }}
+            onPress={() => setActiveWalletId(w.id)}
             className="flex-row items-center gap-4 py-3.5 active:opacity-60"
           >
-            <Icon name={sampleWallets[w].icon} color={c.muted} size={20} />
+            <Icon name={w.icon as IconName} color={c.muted} size={20} />
             <View className="min-w-0 flex-1">
-              <Text className="text-[15px] leading-[22px] text-text">
-                {t(`WALLET_SETUP.WALLETS.${w}`)}
-              </Text>
-              {w === active ? (
+              <Text className="text-[15px] leading-[22px] text-text">{w.name}</Text>
+              {w.id === active?.id ? (
                 <Text className="text-[12.5px] leading-[19px] text-muted">
                   {t('ACCOUNT.ACTIVE_WALLET')}
                 </Text>
@@ -147,7 +143,7 @@ export default function Account() {
               className="text-sm font-medium text-text"
               style={{ fontVariant: ['tabular-nums'] }}
             >
-              {money.rp(balances[w])}
+              {money.rp(w.balance)}
             </Text>
           </Pressable>
         ))}

@@ -5,22 +5,25 @@ import { Pressable, SectionList, Text, View } from 'react-native';
 import { Screen } from '@/components/screen';
 import { TAB_SCROLL_BOTTOM_PADDING } from '@/components/tab-bar';
 import { HintBanner } from '@/components/ui/hint-banner';
-import { Icon } from '@/components/ui/icon';
+import { IconBadge } from '@/components/ui/icon-badge';
+import { Icon, type IconName } from '@/components/ui/icon';
 import { SearchField } from '@/components/ui/search-field';
 import { WalletChip } from '@/components/ui/wallet-chip';
 import { MonthSummaryCard } from '@/features/transactions/month-summary-card';
-import { SAMPLE_TODAY, type SampleTransaction } from '@/features/transactions/sample-data';
+import { listTransactions, periodTotals } from '@/db/repo/transactions';
+import { useDbQuery } from '@/db/use-db-query';
+import { presentTransaction, type PresentedTransaction } from '@/features/transactions/present';
 import { TransactionRow } from '@/features/transactions/transaction-row';
 import { useActiveWallet } from '@/features/wallets/use-active-wallet';
 import { WalletSheet } from '@/features/wallets/wallet-sheet';
-import { relativeDayLabel } from '@/lib/date';
+import { monthRange, relativeDayLabel, toDateString } from '@/lib/date';
 import { useMoneyFormat } from '@/lib/money';
 import { usePalette } from '@/theme/use-palette';
 
-type DaySection = { date: string; net: number; data: SampleTransaction[] };
+type DaySection = { date: string; net: number; data: PresentedTransaction[] };
 
 /** Kelompokkan per tanggal (data sudah urut terbaru dulu) dan hitung total bersih harinya. */
-function groupByDay(rows: SampleTransaction[]): DaySection[] {
+function groupByDay(rows: PresentedTransaction[]): DaySection[] {
   const sections: DaySection[] = [];
   for (const row of rows) {
     let section = sections.at(-1);
@@ -41,24 +44,42 @@ export default function Transactions() {
   const locale = i18n.language === 'id' ? 'id-ID' : 'en-US';
   const [query, setQuery] = useState('');
   const [walletSheetOpen, setWalletSheetOpen] = useState(false);
-  const { key: walletKey, data } = useActiveWallet();
+  const { wallet } = useActiveWallet();
+  const walletId = wallet?.id ?? '';
+  const today = toDateString();
+  // 0 = bulan ini, -1 = bulan lalu, dan seterusnya. Tidak bisa maju melewati bulan ini.
+  const [monthOffset, setMonthOffset] = useState(0);
+  const month = monthRange(today, monthOffset);
+  const rowsRaw = useDbQuery(
+    (db) => listTransactions(db, walletId, month.from, month.to),
+    [walletId, month.from],
+  );
+  const totals = useDbQuery(
+    (db) => periodTotals(db, walletId, month.from, month.to),
+    [walletId, month.from],
+  );
+
+  const transactions = useMemo(
+    () => (rowsRaw ?? []).map((row) => presentTransaction(t, row)),
+    [rowsRaw, t],
+  );
 
   const sections = useMemo(() => {
     const q = query.trim().toLowerCase();
     const rows = q
-      ? data.transactions.filter(
+      ? transactions.filter(
           (tx) => tx.title.toLowerCase().includes(q) || tx.category.toLowerCase().includes(q),
         )
-      : data.transactions;
+      : transactions;
     return groupByDay(rows);
-  }, [query, data]);
+  }, [query, transactions]);
 
   const monthYear = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
   const weekday = new Intl.DateTimeFormat(locale, { weekday: 'long' });
   const dayLabel = (date: string) => {
     const rel = relativeDayLabel(
       date,
-      SAMPLE_TODAY,
+      today,
       { today: t('COMMON.TODAY'), yesterday: t('COMMON.YESTERDAY') },
       locale,
     );
@@ -76,8 +97,8 @@ export default function Transactions() {
         </Text>
         <View className="-mt-2">
           <WalletChip
-            name={t(`WALLET_SETUP.WALLETS.${walletKey}`)}
-            icon={data.icon}
+            name={wallet?.name ?? ''}
+            icon={(wallet?.icon ?? 'wallet') as IconName}
             variant="outline"
             onPress={() => setWalletSheetOpen(true)}
           />
@@ -100,11 +121,13 @@ export default function Transactions() {
         </Pressable>
       </View>
       <MonthSummaryCard
-        monthLabel={monthYear.format(new Date(`${SAMPLE_TODAY}T00:00:00`))}
-        income={data.income}
-        expense={data.expense}
+        monthLabel={monthYear.format(new Date(`${month.from}T00:00:00`))}
+        income={totals?.income ?? 0}
+        expense={totals?.expense ?? 0}
         canGoPrev
-        canGoNext={false}
+        canGoNext={monthOffset < 0}
+        onPrev={() => setMonthOffset((m) => m - 1)}
+        onNext={() => setMonthOffset((m) => Math.min(0, m + 1))}
       />
       <HintBanner hintKey="list" text={t('LIST.HINT')} />
     </View>
@@ -122,9 +145,21 @@ export default function Transactions() {
         // contentContainerClassName tidak terbaca NativeWind di SectionList, jadi lewat style.
         contentContainerStyle={{ paddingBottom: TAB_SCROLL_BOTTOM_PADDING }}
         ListEmptyComponent={
-          <Text className="mt-8 text-center text-sm text-muted">
-            {t('LIST.NO_RESULTS', { query: query.trim() })}
-          </Text>
+          query.trim() ? (
+            <Text className="mt-8 text-center text-sm text-muted">
+              {t('LIST.NO_RESULTS', { query: query.trim() })}
+            </Text>
+          ) : (
+            <View className="mt-8 items-center px-6">
+              <IconBadge name="pencil" size={48} />
+              <Text className="mt-3 text-center text-[15px] font-medium text-text">
+                {t('LIST.EMPTY_TITLE')}
+              </Text>
+              <Text className="mt-1 text-center text-[13px] leading-[19px] text-muted">
+                {t('LIST.EMPTY_BODY')}
+              </Text>
+            </View>
+          )
         }
         renderSectionHeader={({ section }) => {
           const date = new Date(`${section.date}T00:00:00`);

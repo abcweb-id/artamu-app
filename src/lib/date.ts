@@ -31,3 +31,12 @@ export function monthName(date: string, locale: string, offset = 0) {
   d.setMonth(d.getMonth() + offset);
   return new Intl.DateTimeFormat(locale, { month: 'long' }).format(d);
 }
+
+/** Awal dan akhir bulan untuk tanggal YYYY-MM-DD, digeser sejumlah bulan. */
+export function monthRange(date: string, offset = 0) {
+  const d = new Date(`${date.slice(0, 7)}-01T00:00:00`);
+  d.setMonth(d.getMonth() + offset);
+  const first = toDateString(d);
+  const days = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  return { from: first, to: `${first.slice(0, 8)}${String(days).padStart(2, '0')}`, days };
+}

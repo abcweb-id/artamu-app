@@ -15,8 +15,8 @@ import { ScreenTitle } from '@/components/ui/screen-title';
 import { SectionLabel } from '@/components/ui/section-label';
 import { Sheet } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
-import { categories } from '@/features/categories/default-categories';
-import { SAMPLE_TODAY } from '@/features/transactions/sample-data';
+import { countMainCategories } from '@/db/repo/categories';
+import { useDbQuery } from '@/db/use-db-query';
 import { useActiveWallet } from '@/features/wallets/use-active-wallet';
 import { deviceLanguage } from '@/i18n';
 import { authenticateWithBiometrics, canUseBiometrics } from '@/lib/biometrics';
@@ -31,7 +31,7 @@ import { usePalette } from '@/theme/use-palette';
 const LANGUAGE_NAMES = { id: 'Bahasa Indonesia', en: 'English' } as const;
 const AUTO_LOCK_OPTIONS: AutoLockSetting[] = ['IMMEDIATE', '1M', '5M', '15M'];
 
-/** Contoh format angka dan tanggal tiap bahasa, dihitung dengan format yang sama dengan aplikasi. */
+/** Contoh format angka dan tanggal (hari ini) tiap bahasa, dihitung dengan format yang sama dengan aplikasi. */
 function formatSample(lang: 'id' | 'en') {
   const locale = lang === 'id' ? 'id-ID' : 'en-US';
   const amount = new Intl.NumberFormat(locale).format(1_250_000);
@@ -39,7 +39,7 @@ function formatSample(lang: 'id' | 'en') {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(new Date(`${SAMPLE_TODAY}T00:00:00`));
+  }).format(new Date());
   return `Rp ${amount}, ${date}`;
 }
 
@@ -70,7 +70,7 @@ export default function Settings() {
   // Sakelar menunjukkan tampilan yang sedang dipakai, termasuk saat masih "ikuti sistem".
   const dark = useColorScheme().colorScheme === 'dark';
   const currentLanguage = settings.language === 'system' ? deviceLanguage() : settings.language;
-  const mainCategories = categories.filter((c) => !c.parent).length;
+  const mainCategories = useDbQuery(countMainCategories, []) ?? 0;
   const version = Constants.expoConfig?.version ?? '';
 
   const toggleBiometric = async (on: boolean) => {
